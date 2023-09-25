@@ -54,7 +54,7 @@ const HeaderIcon = () => {
               <Typography variant={'base'} className={'leading-[0.9rem]'}>
                   Списание долгов
               </Typography>
-              <Typography variant={'blue-sm'}>
+              <Typography variant={'blue-sm'} className={'font-montserrat-light'}>
                   Юрист Наталия Гулевич
               </Typography>
           </div>
@@ -65,16 +65,16 @@ const HeaderIcon = () => {
 const Navigation = () => {
   return (
       <div className={'flex justify-between min-w-[650px]'}>
-        <Typography variant={'base'}>
+        <Typography variant={'base'} className={'font-montserrat-light'}>
             Главная
         </Typography>
-        <Typography variant={'base'}>
+        <Typography variant={'base'} className={'font-montserrat-light'}>
              Обо мне
         </Typography>
-       <Typography variant={'base'}>
+       <Typography variant={'base'} className={'font-montserrat-light'}>
               Услуги
         </Typography>
-        <Typography variant={'base'}>
+        <Typography variant={'base'} className={'font-montserrat-light'}>
               Обратная связь
         </Typography>
         <SocialNetworkLinks />

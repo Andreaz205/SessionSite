@@ -7,10 +7,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+      backgroundAboutMe: {
+        'background': 'linear-gradient(180deg, rgba(169, 169, 169, 0.20) 0%, rgba(255, 255, 255, 0.00) 100%)',
+        'mix-blend-mode': 'luminosity'
       },
     },
     screens: {
@@ -19,6 +18,11 @@ const config: Config = {
       lg: "62rem",
       xxl: "90rem",
     },
+    fontFamily: {
+      'montserrat-bold': 'MontserratBold, SansSerif, serif',
+      'montserrat-light': 'MontserratLight, SansSerif, serif',
+      'comfortaa': 'Comfortaa, SansSerif, serif',
+    }
   },
   plugins: [],
 }

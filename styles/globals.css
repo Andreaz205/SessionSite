@@ -9,6 +9,34 @@
     font-weight: normal;
 }
 
+@font-face {
+    font-family: "MontserratBold";
+    src: local("Montserrat-Bold"),
+    url("./fonts/Montserrat-Bold.ttf") format("truetype");
+    font-weight: bold;
+}
+
+@font-face {
+    font-family: "MontserratLight";
+    src: local("Montserrat-Light"),
+    url("./fonts/Montserrat-Light.ttf") format("truetype");
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: "Comfortaa";
+    src: local("Comfortaa"),
+    url("./fonts/Comfortaa-Regular.ttf") format("truetype");
+    font-weight: normal;
+}
+
+@layer utilities{
+    .about-me-background{
+        background: linear-gradient(180deg, rgba(169, 169, 169, 0.20) 0%, rgba(255, 255, 255, 0.00) 100%);
+        /*mix-blend-mode: luminosity;*/
+    }
+}
+
 body {
     @apply bg-black;
     font-family: 'Montserrat', SansSerif, serif;

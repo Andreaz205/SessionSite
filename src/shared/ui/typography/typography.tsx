@@ -12,4 +12,6 @@ export const Typography = tw.p<TypographyVariant>`
     ${(p => p.variant === TypographyVariantsEnum.SEMIBOLD_SM && 'text-sm font-medium')}
     ${(p => p.variant === TypographyVariantsEnum.XXXL && 'text-[3.5rem]')}
     ${(p => p.variant === TypographyVariantsEnum.LIGHT_2XL && 'text-2xl font-light')}
+    ${(p => p.variant === TypographyVariantsEnum.SECTION_HEADER && 'text-[#6E8EAB] text-[2.5rem]')}
+    ${(p => p.variant === TypographyVariantsEnum.COMFORTAA_2XXL && 'text-[1.5rem] font-comfortaa')}
 `
