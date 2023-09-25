@@ -140,16 +140,35 @@ const AboutMe = () => {
                         Обо мне
                     </Typography>
                 </div>
-                <div className={'mt-[11rem] flex justify-between'}>
-                    <div>
+                <div className={'mt-[5.5rem] flex justify-between gap-2'}>
+                    <div className={'w-[49%] flex flex-col justify-center'}>
                         <Typography variant={'comfortaa-2xxl'}>
                             Окончила Южно-Уральский государственный университет в 2003 году
                             по специальности юриспруденция.
                         </Typography>
+
+                        <Typography variant={'comfortaa-2xxl'} className={'mt-8'}>
+                            Работала в органах судебной системы, а также крупных юридических компаниях.
+                        </Typography>
                     </div>
-                    <div>
-                        <Image src={MePhoto} alt={'me'}/>
+                    <div className={'relative pt-[37%] w-[34%]'}>
+                        <Image
+                            src={MePhoto}
+                            className={'absolute w-full h-full top-0 left-0'}
+                            alt={'me'}
+                        />
+                        <div className={'absolute w-full top-[100%] flex justify-center mt-[0.5rem]'}>
+                            <Typography className={'font-extrabold'}>
+                                Гулевич Наталия Владленовна
+                            </Typography>
+                        </div>
                     </div>
+                </div>
+
+                <div className={'mt-[8rem] flex justify-center'}>
+                    <Typography variant={'semibold-3xl'}>
+                        Опыт в процедуре банкротства с 2016 года.
+                    </Typography>
                 </div>
             </Container>
 
