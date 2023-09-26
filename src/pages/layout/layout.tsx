@@ -34,7 +34,7 @@ export default function Layout({
 const Header = () => {
   return <Container className={'relative'}>
     <div className={'absolute z-[1] w-full left-0 top-0 h-[90px]'}>
-        <Container className={'h-full max-w-[1000px] mx-auto flex items-center'}>
+        <Container className={'h-full max-w-[1000px] mx-auto flex items-center px-0'}>
           <div className={'flex justify-between items-center w-full'}>
             <HeaderIcon />
             <Navigation />

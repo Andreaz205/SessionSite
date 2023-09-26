@@ -40,7 +40,9 @@
 body {
     @apply bg-black;
     font-family: 'Montserrat', SansSerif, serif;
+    /*background: url(<path-to-image>), lightgray 50% / cover no-repeat;*/
 }
+
 
 
 

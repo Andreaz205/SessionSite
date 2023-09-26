@@ -1,20 +1,34 @@
 import Image from "next/image";
-import CityBackground from '/public/banner/city-background.png';
 import MediaBlock from "@/src/shared/ui/media-block/media-block";
+
+import CityBackground from '/public/banner/city-background.png';
 import {Container} from '../../shared/ui';
 import ProfileLogo from '/public/banner/profile-logo.svg';
 import GroupLogo from '/public/banner/group-logo.svg';
 import HandsLogo from '/public/banner/hands-logo.svg';
 import MoneyLogo from '/public/banner/money-logo.svg';
 import MePhoto from '/public/me/me.png'
+import DocumentOne from '/public/examples/docs/document_1.png'
+import DocumentTwo from '/public/examples/docs/document_2.png'
+import DocumentThree from '/public/examples/docs/document_3.png'
+import DocumentFour from '/public/examples/docs/document_4.png'
+import CardOne from '/public/examples/cards/card_1.png'
+import CardTwo from '/public/examples/cards/card_2.png'
+import CardThree from '/public/examples/cards/card_3.png'
+import CardFour from '/public/examples/cards/card_4.png'
+import Dashed from '/public/examples/dashed.svg'
+
 import {Typography} from "@/src/shared/ui/typography/typography";
 import tw from "tailwind-styled-components";
+import {useState} from "react";
+import {IDocuments} from "@/src/shared/api/types/documents/documents";
 
 export default function Home() {
     return <>
         <Banner />
         <Divider />
         <AboutMe />
+        <Examples />
     </>
 }
 
@@ -27,7 +41,7 @@ const Banner = () => {
             priority
             className={'object-cover w-full h-full absolute top-0 left-0 -z-[1]'}
         />
-        <Container className={'max-w-[1000px]'}>
+        <Container>
             <BannerInfo />
             <BannerMediaBlocks />
             <ConsultButton />
@@ -134,7 +148,7 @@ const ConsultButton = () => {
 const AboutMe = () => {
     return (
         <div className={'h-[900px] relative about-me-background'}>
-            <Container className={'px-[200px]'}>
+            <Container>
                 <div className={'flex justify-center pt-[2.5rem]'}>
                     <Typography variant={'section-header'}>
                         Обо мне
@@ -151,16 +165,19 @@ const AboutMe = () => {
                             Работала в органах судебной системы, а также крупных юридических компаниях.
                         </Typography>
                     </div>
-                    <div className={'relative pt-[37%] w-[34%]'}>
-                        <Image
-                            src={MePhoto}
-                            className={'absolute w-full h-full top-0 left-0'}
-                            alt={'me'}
-                        />
-                        <div className={'absolute w-full top-[100%] flex justify-center mt-[0.5rem]'}>
-                            <Typography className={'font-extrabold'}>
-                                Гулевич Наталия Владленовна
-                            </Typography>
+                    <div className={'w-[34%] '}>
+                        <div className={'pt-[110%] relative'}>
+                            <Image
+                                src={MePhoto}
+                                className={'absolute w-full h-full top-0 left-0'}
+                                alt={'me'}
+                            />
+
+                            <div className={'absolute w-full top-[100%] flex justify-center mt-[0.5rem]'}>
+                                <Typography className={'font-extrabold'}>
+                                    Гулевич Наталия Владленовна
+                                </Typography>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -171,7 +188,105 @@ const AboutMe = () => {
                     </Typography>
                 </div>
             </Container>
-
         </div>
+    )
+}
+
+const DocsData: IDocuments[] = [
+    {
+        id: 1,
+        title: "Дело №1",
+        doc_url: DocumentOne,
+        card_url: CardOne
+    },
+    {
+        id: 2,
+        title: "Дело №2",
+        doc_url: DocumentTwo,
+        card_url: CardTwo
+    },
+    {
+        id: 3,
+        title: "Дело №3",
+        doc_url: DocumentThree,
+        card_url: CardThree
+    },
+    {
+        id: 4,
+        title: "Дело №4",
+        doc_url: DocumentFour,
+        card_url: CardFour
+    },
+];
+
+const Examples = () => {
+    return (
+        <div className={"h-[1236px] bg-[url('/examples/mountains.png')] bg-gray-500 bg-no-repeat bg-cover"}>
+            <Container>
+                <Typography variant={'comfortaa-2xxl'} className={'font-normal pt-16 tracking-[0.48px] text-[32px]'}>
+                    Примеры выигранных дел по банкротству
+                </Typography>
+
+                <Docs docs={DocsData}/>
+
+            </Container>
+        </div>
+    )
+}
+
+type DocsProps = {
+    docs: IDocuments[]
+}
+
+const Docs = (props: DocsProps) => {
+    const [activeDocument, setActiveDocument] = useState<null|IDocuments>(props.docs[0])
+    return (
+        <>
+            {
+                activeDocument ? (
+                    <>
+                        <div className={'flex justify-center'}>
+                            <div className={'mt-20 relative w-[82%] pr-[7%]'}>
+                                <div className={'w-[45%] absolute top-0'}>
+                                    <div className={'pt-[146%] relative'}>
+                                        <Image
+                                            className={'absolute top-0 left-0 w-full h-full'}
+                                            src={activeDocument.doc_url}
+                                            alt={activeDocument.title}
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className={'w-full'}>
+                                    <div className={'pt-[74%] relative mb-[8%]'}>
+                                        <Image
+                                            className={'absolute top-[12%] left-[25%] h-full'}
+                                            src={Dashed}
+                                            alt={''}
+                                        />
+                                        <Typography className={'w-[265px] absolute -right-[17%] top-[23%] text-center'} variant={'semibold-3xl'}>
+                                            Решения судов именем Российской Федерации
+                                        </Typography>
+                                    </div>
+                                </div>
+
+                                <div className={'relative pb-[31%]'}>
+                                    <Image
+                                        className={'absolute top-0 left-0'}
+                                        src={activeDocument.card_url}
+                                        alt={''}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div className={'flex justify-center mt-[5.5rem]'}>
+                            <div className={'font-extrabold text-3xl text-[#FFD66A] text-opacity-40 bg-black  flex justify-center items-center w-[260px] h-[48px] border-2 border-[#565151]'}>
+                                {activeDocument.title}
+                            </div>
+                        </div>
+                    </>
+                ): null
+            }
+        </>
     )
 }
