@@ -22,6 +22,7 @@ import {Typography} from "@/src/shared/ui/typography/typography";
 import tw from "tailwind-styled-components";
 import {useState} from "react";
 import {IDocuments} from "@/src/shared/api/types/documents/documents";
+import {ArrowLeft, ArrowRight} from "@/src/shared/assets/ui";
 
 export default function Home() {
     return <>
@@ -240,12 +241,33 @@ type DocsProps = {
 
 const Docs = (props: DocsProps) => {
     const [activeDocument, setActiveDocument] = useState<null|IDocuments>(props.docs[0])
+
+    const nextSlide = () => {
+        if (activeDocument) {
+            if (props.docs.indexOf(activeDocument) === (props.docs.length - 1)) {
+                setActiveDocument(props.docs[0]);
+            } else {
+                setActiveDocument(props.docs[props.docs.indexOf(activeDocument) + 1]);
+            }
+        }
+    }
+
+    const prevSlide = () => {
+        if (activeDocument) {
+            if (props.docs.indexOf(activeDocument) === 0) {
+                setActiveDocument(props.docs[props.docs.length - 1]);
+            } else {
+                setActiveDocument(props.docs[props.docs.indexOf(activeDocument) - 1]);
+            }
+        }
+    }
+
     return (
         <>
             {
                 activeDocument ? (
                     <>
-                        <div className={'flex justify-center'}>
+                        <div className={'flex justify-center relative'}>
                             <div className={'mt-20 relative w-[82%] pr-[7%]'}>
                                 <div className={'w-[45%] absolute top-0'}>
                                     <div className={'pt-[146%] relative'}>
@@ -278,6 +300,11 @@ const Docs = (props: DocsProps) => {
                                     />
                                 </div>
                             </div>
+
+                            <Arrows
+                                nextSlide={nextSlide}
+                                prevSlide={prevSlide}
+                            />
                         </div>
                         <div className={'flex justify-center mt-[5.5rem]'}>
                             <div className={'font-extrabold text-3xl text-[#FFD66A] text-opacity-40 bg-black  flex justify-center items-center w-[260px] h-[48px] border-2 border-[#565151]'}>
@@ -288,5 +315,23 @@ const Docs = (props: DocsProps) => {
                 ): null
             }
         </>
+    )
+}
+
+type ExamplesArrowProps = {
+    nextSlide: () => void,
+    prevSlide: () => void,
+}
+
+const Arrows = (props: ExamplesArrowProps) => {
+    return (
+        <div className={'absolute w-full top-1/2 left-0 flex justify-between'}>
+            <div onClick={() => props.prevSlide()}>
+                <ArrowLeft />
+            </div>
+            <div onClick={() => props.nextSlide()}>
+                <ArrowRight />
+            </div>
+        </div>
     )
 }
