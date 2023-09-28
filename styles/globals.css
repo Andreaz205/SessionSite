@@ -30,15 +30,48 @@
     font-weight: normal;
 }
 
+@font-face {
+    font-family: "DrukCyr";
+    src: local("DrukCyr-Bold"),
+    url("./fonts/DrukCyr-Bold.ttf") format("truetype");
+    font-weight: bold;
+}
+
+@font-face {
+    font-family: "MontserratExtraLight";
+    src: local("Montserrat-ExtraLight"),
+    url("./fonts/Montserrat-ExtraLight.ttf") format("truetype");
+    font-weight: normal;
+}
+
 @layer utilities{
     .about-me-background{
         background: linear-gradient(180deg, rgba(169, 169, 169, 0.20) 0%, rgba(255, 255, 255, 0.00) 100%);
         /*mix-blend-mode: luminosity;*/
     }
+    .bg-advantage {
+        background: linear-gradient(99deg, rgba(69, 69, 69, 0.40) 0%, rgba(54, 54, 54, 0.00) 341.76%);
+        filter: blur(0px);
+    }
+
+    .bg-why-i{
+        background: linear-gradient(143deg, #000 17.36%, rgba(255, 255, 255, 0.15) 70.53%);
+    }
+
+    .bg-why-i-second {
+        background: linear-gradient(143deg, rgba(255, 255, 255, 0.04) 10.53%,  rgba(0, 0, 0, 0.80) 97.36%);
+    }
+
+    .advantage-number {
+        background: radial-gradient(245.23% 712.61% at -4.82% 56.95%, rgba(0, 0, 0, 0.90) 0%, rgba(57, 46, 18, 0.00) 100%);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
 }
 
 body {
-    @apply bg-black;
+    @apply bg-black text-white;
     font-family: 'Montserrat', SansSerif, serif;
     /*background: url(<path-to-image>), lightgray 50% / cover no-repeat;*/
 }

@@ -7,6 +7,10 @@ import ProfileLogo from '/public/banner/profile-logo.svg';
 import GroupLogo from '/public/banner/group-logo.svg';
 import HandsLogo from '/public/banner/hands-logo.svg';
 import MoneyLogo from '/public/banner/money-logo.svg';
+import InstallmentMedia1 from '/public/installment/media_1.png';
+import InstallmentMedia2 from '/public/installment/media_2.png';
+import InstallmentMedia3 from '/public/installment/media_3.png';
+import InstallmentMedia4 from '/public/installment/media_4.png';
 import MePhoto from '/public/me/me.png'
 import DocumentOne from '/public/examples/docs/document_1.png'
 import DocumentTwo from '/public/examples/docs/document_2.png'
@@ -17,12 +21,13 @@ import CardTwo from '/public/examples/cards/card_2.png'
 import CardThree from '/public/examples/cards/card_3.png'
 import CardFour from '/public/examples/cards/card_4.png'
 import Dashed from '/public/examples/dashed.svg'
+// import AdvantageIcon from '/public/advantages/advantage-icon.png'
 
 import {Typography} from "@/src/shared/ui/typography/typography";
 import tw from "tailwind-styled-components";
 import {useState} from "react";
 import {IDocuments} from "@/src/shared/api/types/documents/documents";
-import {ArrowLeft, ArrowRight} from "@/src/shared/assets/ui";
+import {AdvantageIcon, ArrowLeft, ArrowRight} from "@/src/shared/assets/ui";
 
 export default function Home() {
     return <>
@@ -30,6 +35,8 @@ export default function Home() {
         <Divider />
         <AboutMe />
         <Examples />
+        <Advantages />
+        <Installment />
     </>
 }
 
@@ -335,3 +342,203 @@ const Arrows = (props: ExamplesArrowProps) => {
         </div>
     )
 }
+
+const advantageCardsData = [
+    {
+        id: 1,
+        number: '01',
+        text: 'Я действую без посредников ,  веду дело с первого звонка \n' +
+            'до получения определения \n' +
+            'об освобождении должника от обязательств.',
+    },
+    {
+        id: 2,
+        number: '02',
+        text: 'Действую исключительно \n' +
+            'в интересах сохранения имущества',
+    },
+    {
+        id: 3,
+        number: '03',
+        text: 'Берусь за дело, только если уверена , что смогу достичь нужного результата',
+    },
+    {
+        id: 4,
+        number: '04',
+        text: 'Честно предупреждаю о рисках, которые возможны в процедуре банкротства',
+    },
+    {
+        id: 5,
+        number: '05',
+        text: 'Предлагаю выгодные варианты рассрочки без увеличения стоимости услуг',
+    },
+    {
+        id: 6,
+        number: '06',
+        text: 'Стоимость услуг, условия оплаты прописаны в договоре',
+    },
+    {
+        id: 7,
+        number: '07',
+        text: 'Имею большую клиентскую базу',
+    },
+]
+
+const Advantages = () => {
+    return (
+        <div className={'bg-why-i'}>
+            <div className={'bg-why-i-second'}>
+                <Container>
+                    <Typography variant={'comfortaa-2xxl'} className={'text-[2rem] pt-24'}>
+                        Почему я
+                    </Typography>
+                    <div className={'flex flex-col items-center mt-14'}>
+                        {
+                            advantageCardsData.map(cardData => (
+                                <AdvantageCard
+                                    key={cardData.id}
+                                    number={cardData.number}
+                                    text={cardData.text}
+                                />
+                            ))
+                        }
+                    </div>
+                </Container>
+            </div>
+        </div>
+    )
+}
+
+type AdvantageCardProps = {
+    number: string
+    text: string
+}
+
+const AdvantageCard = (props: AdvantageCardProps) => {
+    return (
+        <div className={'w-[71%] min-h-[126px] py-4 relative pr-4 pl-16 bg-advantage mb-24'}>
+            <div className={'absolute -top-[28px] left-[30px] -translate-x-1/2'}>
+                <AdvantageIcon />
+                <Typography className={'font-druk-cyr text-[4.6rem] absolute z-[2] top-[50px] left-[15px] advantage-number'}>
+                    {props.number}
+                </Typography>
+            </div>
+            <Typography className={'text-[2rem]'}>
+                {props.text}
+            </Typography>
+        </div>
+    )
+}
+
+const installmentMediaBlocksData =[
+    {
+        id: 1,
+        image_url: InstallmentMedia1,
+        description: 'Рассказываете \n' +
+            'о своей проблеме',
+        image_wrapper_classes: 'pt-[62%]',
+        image_classes: 'left-0  top-0',
+        description_wrapper_classes: 'mt-4',
+        description_classes: 'text-black text-center font-medium text-xl',
+    },
+    {
+        id: 2,
+        image_url: InstallmentMedia2,
+        description: 'Полностью бесплатная консультация',
+        image_wrapper_classes: 'pt-[62%]',
+        image_classes: 'left-0  top-0',
+        description_wrapper_classes: 'mt-4',
+        description_classes: 'text-black text-center font-medium text-xl',
+    },
+    {
+        id: 3,
+        image_url: InstallmentMedia3,
+        description: 'Обсуждаем все нюансы\n' +
+            ' и оцениваем риски',
+        image_wrapper_classes: 'pt-[62%]',
+        image_classes: 'left-0  top-0',
+        description_wrapper_classes: 'mt-4',
+        description_classes: 'text-black text-center font-medium text-xl',
+    },
+    {
+        id: 4,
+        image_url: InstallmentMedia4,
+        description: 'Сниженная цена после обсуждения всех деталей',
+        image_wrapper_classes: 'pt-[62%]',
+        image_classes: 'left-0  top-0',
+        description_wrapper_classes: 'mt-4',
+        description_classes: 'text-black text-center font-medium text-xl',
+    },
+];
+
+const Installment = () => {
+    return (
+        <div className={"h-[729px] relative py-[34px] bg-white bg-[url('/installment/texture.png')]"}>
+            <InstallmentRedLine className={'absolute top-0 left-0 w-full'}>
+                <div className={'relative w-full h-full overflow-hidden'}>
+                    <div className={'absolute top-0 h-full left-[60%] -translate-x-1/2 flex justify-center items-center'}>
+                        {
+                            Array(20).fill(1).map((item, idx) => (
+                                <Typography key={idx} className={'min-w-[350px] font-semibold text-[1.25rem]'}>ПЛАТИ КАК УДОБНО!</Typography>
+                            ))
+                        }
+                    </div>
+                </div>
+            </InstallmentRedLine>
+            <Container>
+                <div className={'mt-8 flex justify-center flex-col items-center'}>
+                    <Typography className={'pl-12 font-montserrat-extralight uppercase text-[5.2rem] tracking-[3.5rem] text-black'}>
+                        Рассрочка
+                    </Typography>
+
+
+                    <Typography className={'font-montserrat-extralight uppercase text-[3rem] tracking-[2rem] text-black -mt-3'}>
+                        БЕЗ ПРОЦЕНТОВ
+                    </Typography>
+                </div>
+
+                <div className={'flex justify-center mt-8'}>
+                    <button className={'w-[320px] h-[90px] rounded-[200px] relative'}>
+                        <div className={'absolute top-0 left-0 w-full h-full bg-black filter blur-[9px] rounded-[200px]'}></div>
+                        <div className={'bg-red-600 w-full h-full absolute top-0 left-0 rounded-[200px] flex justify-center items-center'}>
+                            <Typography>
+                                Подробнее
+                            </Typography>
+                        </div>
+                    </button>
+                </div>
+
+                <div className={'flex justify-center gap-5 mt-12'}>
+                    {installmentMediaBlocksData.map(media => (
+                        <div
+                            key={media.id}
+                            className={'w-[23.5%]'}
+                        >
+                            <MediaBlock
+                                image_url={media.image_url}
+                                description={media.description}
+                                image_classes={media.image_classes}
+                                image_wrapper_classes={media.image_wrapper_classes}
+                                description_wrapper_classes={media.description_wrapper_classes}
+                                description_classes={media.description_classes}
+                            />
+                        </div>
+                    ))}
+                </div>
+            </Container>
+            <InstallmentRedLine className={'absolute bottom-0 left-0 w-full'}>
+                <div className={'relative w-full h-full overflow-hidden'}>
+                    <div className={'absolute top-0 h-full left-[40%] -translate-x-1/2 flex justify-center items-center'}>
+                        {
+                            Array(20).fill(1).map((item, idx) => (
+                                <Typography key={idx} className={'min-w-[350px] font-semibold text-[1.25rem]'}>ПЛАТИ КАК УДОБНО!</Typography>
+                            ))
+                        }
+                    </div>
+                </div>
+            </InstallmentRedLine>
+        </div>
+    );
+}
+
+const InstallmentRedLine = tw.div`h-[34px] bg-[#FF0000]`;

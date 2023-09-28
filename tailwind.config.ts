@@ -21,7 +21,9 @@ const config: Config = {
     fontFamily: {
       'montserrat-bold': 'MontserratBold, SansSerif, serif',
       'montserrat-light': 'MontserratLight, SansSerif, serif',
+      'montserrat-extralight': 'MontserratExtraLight, SansSerif, serif',
       'comfortaa': 'Comfortaa, SansSerif, serif',
+      'druk-cyr': 'DrukCyr, SansSerif, serif'
     }
   },
   plugins: [],
