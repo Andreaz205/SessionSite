@@ -11,16 +11,19 @@ import InstallmentMedia1 from '/public/installment/media_1.png';
 import InstallmentMedia2 from '/public/installment/media_2.png';
 import InstallmentMedia3 from '/public/installment/media_3.png';
 import InstallmentMedia4 from '/public/installment/media_4.png';
-import MePhoto from '/public/me/me.png'
-import DocumentOne from '/public/examples/docs/document_1.png'
-import DocumentTwo from '/public/examples/docs/document_2.png'
-import DocumentThree from '/public/examples/docs/document_3.png'
-import DocumentFour from '/public/examples/docs/document_4.png'
-import CardOne from '/public/examples/cards/card_1.png'
-import CardTwo from '/public/examples/cards/card_2.png'
-import CardThree from '/public/examples/cards/card_3.png'
-import CardFour from '/public/examples/cards/card_4.png'
-import Dashed from '/public/examples/dashed.svg'
+import MePhoto from '/public/me/me.png';
+import DocumentOne from '/public/examples/docs/document_1.png';
+import DocumentTwo from '/public/examples/docs/document_2.png';
+import DocumentThree from '/public/examples/docs/document_3.png';
+import DocumentFour from '/public/examples/docs/document_4.png';
+import CardOne from '/public/examples/cards/card_1.png';
+import CardTwo from '/public/examples/cards/card_2.png';
+import CardThree from '/public/examples/cards/card_3.png';
+import CardFour from '/public/examples/cards/card_4.png';
+import Dashed from '/public/examples/dashed.svg';
+import  Services1 from '/public/services/01.png';
+import  Services2 from '/public/services/02.png';
+import  Services3 from '/public/services/03.png';
 // import AdvantageIcon from '/public/advantages/advantage-icon.png'
 
 import {Typography} from "@/src/shared/ui/typography/typography";
@@ -37,6 +40,7 @@ export default function Home() {
         <Examples />
         <Advantages />
         <Installment />
+        <Services />
     </>
 }
 
@@ -542,3 +546,95 @@ const Installment = () => {
 }
 
 const InstallmentRedLine = tw.div`h-[34px] bg-[#FF0000]`;
+
+const Services = () => {
+    return <div className={"bg-[#222020]"}>
+        <div className={"w-full bg-[url('/services/services_texture.png')] pb-[1000px]"}>
+            <Container>
+                <div className={'flex justify-center'}>
+                    <Typography variant={'section-header'} className={'mt-5'}>
+                        Услуги
+                    </Typography>
+                </div>
+
+                <div className={'mt-12 md:grid md:grid-cols-[58.6%_41.4%] md:grid-rows-[min(10rem)_min(6.3rem)_min(3.6rem)__min(3.6rem)_min(3.6rem)] md:gap-x-1'}>
+                    <div className={'row-start-1 row-end-2 h-full flex items-center'}>
+                        <Typography variant={'comfortaa-2xxl'} className={'text-2xl'}>
+                            Хорошо. Раз мы уже познакомились , то пришло время рассказать
+                            о том , что я могу для Вас сделать более подробно
+                        </Typography>
+                    </div>
+
+                    <div className={'bg-[#000] bg-opacity-[29%] rounded-[20px] overflow-hidden row-start-2 row-end-3 flex justify-start md:flex-nowrap mb-1'}>
+                        <div className={'-ml-12 -mt-12'}>
+                            <Image
+                                src={Services2}
+                                width={213}
+                                height={192}
+                                className={'min-w-[213px] min-h-[192px]'}
+                                alt={'02'}
+                            />
+                        </div>
+                        <div className={'h-full flex items-center pr-5 -ml-4'}>
+                            <Typography className={'text-[0.9250rem] text-right tracking-[1.4px] leading-[1.1rem]'}>
+                                Финансовая защита. Процедура финансовой защиты позволяет решить проблему, связанную с долговыми обязательствами,
+                                решить в судебном или досудебном порядке.
+                            </Typography>
+                        </div>
+                    </div>
+
+                    <div className={'bg-[#000] bg-opacity-[29%] overflow-hidden row-start-3 row-end-4 border-2 border-[#CAAB60] border-opacity-40 mb-[0.3rem]'}>
+                        <div className={"h-full bg-[url('/services/service_item_texture.png')] flex items-center justify-center"}>
+                            <Typography variant={'light-2xl'} className={'text-[0.9375rem]'}>
+                                Фиксация суммы долга
+                            </Typography>
+                        </div>
+                    </div>
+
+                    <div className={'bg-[#000] bg-opacity-[29%] overflow-hidden row-start-4 row-end-5 border-2 border-[#CAAB60] border-opacity-40 my-[0.3rem]'}>
+                        <div className={"h-full bg-[url('/services/service_item_texture.png')] flex items-center justify-center"}>
+                            <Typography variant={'light-2xl'} className={'text-[0.9375rem]'}>
+                                Частичное списание долга
+                            </Typography>
+                        </div>
+                    </div>
+
+                    <div className={'bg-[#000] bg-opacity-[29%] overflow-hidden row-start-5 row-end-6 border-2 border-[#CAAB60] border-opacity-40 mt-[0.3rem]'}>
+                        <div className={"h-full bg-[url('/services/service_item_texture.png')] flex items-center justify-center"}>
+                            <Typography variant={'light-2xl'} className={'text-[0.9375rem]'}>
+                                Посильные платежи
+                            </Typography>
+                        </div>
+                    </div>
+
+                    <div className={'bg-[#000] bg-opacity-[29%] rounded-t-[20px] overflow-hidden row-start-1 row-end-6 relative'}>
+                        <Image
+                            src={Services1}
+                            className={'-ml-12 -mt-12'}
+                            alt={'01'}
+                        />
+
+                        <div className={'mt-5 px-7 text-center text-[0.9375rem]'}>
+                            <Typography>
+                                Банкротство физических лиц,
+                                в соответствии с ФЗ 127
+                                «О несостоятельности
+                                (банкротстве)».
+                                Списание задолженности
+                                на сегодняшний день возможно лишь через процедуру банкротства.
+                            </Typography>
+                        </div>
+
+                        <div className={'w-full absolute bottom-0 left-0'}>
+                            <button className={"bg-[url('/banner/gold-texture.png')] bg-[#F6CF69] rounded-t-[9px] shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] w-full"}>
+                                <Typography className={'font-montserrat-bold text-base  bg-opacity-50 text-black h-[81px] flex justify-center items-center shadow-[0_8px_50px_0_rgba(208,169,169,0.25)] w-full'} $as={'div'}>
+                                    Бесплатная консультация
+                                </Typography>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </Container>
+        </div>
+    </div>
+}
