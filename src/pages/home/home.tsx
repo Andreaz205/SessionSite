@@ -24,13 +24,16 @@ import Dashed from '/public/examples/dashed.svg';
 import  Services1 from '/public/services/01.png';
 import  Services2 from '/public/services/02.png';
 import  Services3 from '/public/services/03.png';
-// import AdvantageIcon from '/public/advantages/advantage-icon.png'
-
+import  Services4 from '/public/services/04.png';
+import  AuthorTg from '/public/author/tg.png';
 import {Typography} from "@/src/shared/ui/typography/typography";
 import tw from "tailwind-styled-components";
-import {useState} from "react";
+import {useMemo, useState} from "react";
 import {IDocuments} from "@/src/shared/api/types/documents/documents";
 import {AdvantageIcon, ArrowLeft, ArrowRight} from "@/src/shared/assets/ui";
+import Ticker from 'react-ticker';
+import {PopupGallery} from "@/src/widgets/popup-gallery/popup-gallery";
+import {Media} from "@/src/shared/api/types";
 
 export default function Home() {
     return <>
@@ -41,6 +44,8 @@ export default function Home() {
         <Advantages />
         <Installment />
         <Services />
+        <Feedback />
+        <Author />
     </>
 }
 
@@ -273,8 +278,55 @@ const Docs = (props: DocsProps) => {
         }
     }
 
+    // POPUP
+    const medias: Media[] = useMemo(() => props.docs.map(doc => ({
+        id: doc.id,
+        image_url: doc.doc_url,
+        video_url: null
+    })), [props.docs])
+
+    const [activeMedia, setActiveMedia] = useState<Media | null>(null)
+
+    const [isGalleryOpen, setIsGalleryOpen] = useState<boolean>(false);
+    const handleMediaClick = (docum: IDocuments) => {
+        const media = medias.find(m => m.id === docum.id)
+        if (media) {
+            setIsGalleryOpen(true)
+            setActiveMedia(media)
+        }
+
+
+    }
+    const nextGalleryMediaClick = () => {
+        if (activeMedia) {
+            const index = medias.indexOf(activeMedia)
+            if (index !== medias.length - 1 ) {
+                setActiveMedia(medias[index + 1])
+            }
+        }
+
+    }
+    const previousGalleryMediaClick = () => {
+        if (activeMedia) {
+            const index = medias.indexOf(activeMedia)
+            if (index !== 0) {
+                setActiveMedia(medias[index - 1])
+            }
+        }
+
+    }
+
     return (
         <>
+            <PopupGallery
+                activeMedia={activeMedia}
+                isOpen={isGalleryOpen}
+                onClose={() => setIsGalleryOpen(false)}
+                medias={medias}
+                onChangeActiveMedia={(media) => setActiveMedia(media)}
+                next={nextGalleryMediaClick}
+                prev={previousGalleryMediaClick}
+            />
             {
                 activeDocument ? (
                     <>
@@ -283,7 +335,8 @@ const Docs = (props: DocsProps) => {
                                 <div className={'w-[45%] absolute top-0'}>
                                     <div className={'pt-[146%] relative'}>
                                         <Image
-                                            className={'absolute top-0 left-0 w-full h-full'}
+                                            onClick={() => handleMediaClick(activeDocument)}
+                                            className={'absolute top-0 left-0 w-full h-full z-10 cursor-pointer'}
                                             src={activeDocument.doc_url}
                                             alt={activeDocument.title}
                                         />
@@ -337,10 +390,16 @@ type ExamplesArrowProps = {
 const Arrows = (props: ExamplesArrowProps) => {
     return (
         <div className={'absolute w-full top-1/2 left-0 flex justify-between'}>
-            <div onClick={() => props.prevSlide()}>
+            <div
+                className={'cursor-pointer select-none'}
+                onClick={() => props.prevSlide()}
+            >
                 <ArrowLeft />
             </div>
-            <div onClick={() => props.nextSlide()}>
+            <div
+                className={'cursor-pointer select-none'}
+                onClick={() => props.nextSlide()}
+            >
                 <ArrowRight />
             </div>
         </div>
@@ -479,15 +538,13 @@ const Installment = () => {
     return (
         <div className={"h-[729px] relative py-[34px] bg-white bg-[url('/installment/texture.png')]"}>
             <InstallmentRedLine className={'absolute top-0 left-0 w-full'}>
-                <div className={'relative w-full h-full overflow-hidden'}>
-                    <div className={'absolute top-0 h-full left-[60%] -translate-x-1/2 flex justify-center items-center'}>
-                        {
-                            Array(20).fill(1).map((item, idx) => (
-                                <Typography key={idx} className={'min-w-[350px] font-semibold text-[1.25rem]'}>ПЛАТИ КАК УДОБНО!</Typography>
-                            ))
-                        }
-                    </div>
-                </div>
+                <Ticker
+                    direction={'toRight'}
+                >
+                    {
+                        ({index}) => <Typography key={index} className={'min-w-[350px] font-semibold text-[1.25rem]'}>ПЛАТИ КАК УДОБНО!</Typography>
+                    }
+                </Ticker>
             </InstallmentRedLine>
             <Container>
                 <div className={'mt-8 flex justify-center flex-col items-center'}>
@@ -531,15 +588,13 @@ const Installment = () => {
                 </div>
             </Container>
             <InstallmentRedLine className={'absolute bottom-0 left-0 w-full'}>
-                <div className={'relative w-full h-full overflow-hidden'}>
-                    <div className={'absolute top-0 h-full left-[40%] -translate-x-1/2 flex justify-center items-center'}>
-                        {
-                            Array(20).fill(1).map((item, idx) => (
-                                <Typography key={idx} className={'min-w-[350px] font-semibold text-[1.25rem]'}>ПЛАТИ КАК УДОБНО!</Typography>
-                            ))
-                        }
-                    </div>
-                </div>
+                <Ticker
+                    direction={'toRight'}
+                >
+                    {
+                        ({index}) => <Typography key={index} className={'min-w-[350px] font-semibold text-[1.25rem]'}>ПЛАТИ КАК УДОБНО!</Typography>
+                    }
+                </Ticker>
             </InstallmentRedLine>
         </div>
     );
@@ -547,9 +602,52 @@ const Installment = () => {
 
 const InstallmentRedLine = tw.div`h-[34px] bg-[#FF0000]`;
 
+const footerMediaButtonsData = [
+    {
+        id: 1,
+        title: "1",
+        media_url: ''
+    },
+    {
+        id: 2,
+        title: "2",
+        media_url: ''
+    },
+    {
+        id: 3,
+        title: "3",
+        media_url: ''
+    },
+    {
+        id: 4,
+        title: "4",
+        media_url: ''
+    },
+    {
+        id: 5,
+        title: "5",
+        media_url: ''
+    },
+    {
+        id: 6,
+        title: "6",
+        media_url: ''
+    },
+    {
+        id: 7,
+        title: "7",
+        media_url: ''
+    },
+    {
+        id: 8,
+        title: "8",
+        media_url: ''
+    },
+]
+
 const Services = () => {
     return <div className={"bg-[#222020]"}>
-        <div className={"w-full bg-[url('/services/services_texture.png')] pb-[1000px]"}>
+        <div className={"w-full bg-[url('/services/services_texture.png')] bg-no-repeat bg-cover"}>
             <Container>
                 <div className={'flex justify-center'}>
                     <Typography variant={'section-header'} className={'mt-5'}>
@@ -557,7 +655,7 @@ const Services = () => {
                     </Typography>
                 </div>
 
-                <div className={'mt-12 md:grid md:grid-cols-[58.6%_41.4%] md:grid-rows-[min(10rem)_min(6.3rem)_min(3.6rem)__min(3.6rem)_min(3.6rem)] md:gap-x-1'}>
+                <div className={'mt-12 md:grid md:grid-cols-[58.6%_41.4%] md:grid-rows-[min(10rem)_min(6.3rem)_min(3.6rem)__min(3.6rem)_min(3.6rem)_min(23rem)] md:gap-x-1'}>
                     <div className={'row-start-1 row-end-2 h-full flex items-center'}>
                         <Typography variant={'comfortaa-2xxl'} className={'text-2xl'}>
                             Хорошо. Раз мы уже познакомились , то пришло время рассказать
@@ -627,14 +725,158 @@ const Services = () => {
 
                         <div className={'w-full absolute bottom-0 left-0'}>
                             <button className={"bg-[url('/banner/gold-texture.png')] bg-[#F6CF69] rounded-t-[9px] shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] w-full"}>
-                                <Typography className={'font-montserrat-bold text-base  bg-opacity-50 text-black h-[81px] flex justify-center items-center shadow-[0_8px_50px_0_rgba(208,169,169,0.25)] w-full'} $as={'div'}>
-                                    Бесплатная консультация
+                                <Typography className={'font-comfortaa font-bold text-[0.9375rem] bg-opacity-50 text-black h-[81px] flex justify-center items-center shadow-[0_8px_50px_0_rgba(208,169,169,0.25)] w-full'} $as={'div'}>
+                                    Подробнее
                                 </Typography>
                             </button>
                         </div>
                     </div>
+
+                    <div className={'col-start-1 col-end-3 mt-6 bg-[#000] bg-opacity-[29%] rounded-[20px] overflow-hidden'}>
+                            <Image
+                                className={'max-w-none h-[10.25rem] w-[17.25rem] -mt-8 -ml-8'}
+                                src={Services3}
+                                alt={'03'}
+                            />
+                            <div className={'px-28 mb-[5.6rem] mt-[-1.5rem]'}>
+                                <div className={'text-xl text-center tracking-[0.125rem] leading-[1.5rem]'}>
+                                    <p>Юридическая защита.</p>
+                                    Помощь опытного юриста — гарантия успешного банкротства.
+                                    Я возьму на себя полное ведение дела:
+                                    <p>от первичной консультации и детального разбора ситуации</p>
+                                    до представления ваших интересов
+                                    <p>в суде и взаимодействия с кредиторами.</p>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </Container>
+            <ServicesMediaBlock />
+        </div>
+    </div>
+}
+
+const ServicesMediaBlock = () => {
+    return (
+        <div className={'pb-[3.25rem]'}>
+            <Container>
+                <div className={'grid grid-cols-8 grid-rows-2 mt-1.5 gap-x-[0.9rem]'}>
+                    {footerMediaButtonsData.map(buttonData => (
+                        <div key={buttonData.id} className={"bg-[url('/services/btn_texture.png')] overflow-hidden border-2 border-[#CAAB60] border-opacity-40 h-[3.33rem]"}>
+                            <div className={"h-full bg-[#000] bg-opacity-[29%] flex items-center justify-center"}>
+                                <Typography variant={'light-2xl'} className={'text-[0.9375rem]'}>
+                                    {buttonData.title}
+                                </Typography>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </Container>
+            <Container className={'px-0'}>
+                <div className={'relative pt-[40.7%]'}>
+                    <div className={'absolute bg-white h-full w-full top-0 left-0'}>
+
+                    </div>
+                </div>
+            </Container>
+            <Container>
+                <div className={'mt-[4.25rem] bg-[#000] bg-opacity-[29%] rounded-[20px] overflow-hidden h-[14.1rem] relative'}>
+                    <Image
+                        className={'max-w-none h-[11.9rem] w-[12.44rem] -mt-12 -ml-8'}
+                        src={Services4}
+                        alt={'04'}
+                    />
+                    <div className={'-mt-[4.5rem] pl-[11rem] pr-[11.5rem] text-center font-medium tracking-[0.1rem]'}>
+                        <p>Внесудебное банкротство.</p>
+                        На текущий момент закон предусматривает эту возможность для граждан, чья задолженность находится в пределах от 50 тысяч до 500 тысяч рублей.
+                    </div>
+
+                    <div className={'absolute top-0 right-0 w-[3.25rem] h-full'}>
+                        <button className={"bg-[url('/banner/gold-texture.png')] bg-[#F6CF69] shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] w-full h-full"}>
+                            <Typography className={'font-comfortaa font-bold text-[0.9375rem] rotate-90 bg-opacity-50 text-black flex justify-center items-center shadow-[0_8px_50px_0_rgba(208,169,169,0.25)] w-full'} $as={'div'}>
+                                Подробнее
+                            </Typography>
+                        </button>
+                    </div>
                 </div>
             </Container>
         </div>
-    </div>
+    )
+}
+
+const Feedback = () => {
+    return (
+        <div className={'bg-[#171A1A]'}>
+            <Container>
+                <div className={'flex justify-center'}>
+                    <Typography variant={'section-header'} className={'pt-6'}>
+                        Обратная связь
+                    </Typography>
+                </div>
+                <div className={'grid grid-cols-[1fr_300px_min(16.7rem)]'}>
+                    <div className={'col-start-1 col-end-3'}>
+                        <Typography>
+                            ЕСЛИ НЕТ ВОЗМОЖНОСТИ ОСТАВИТЬ ЗАЯВКУ, МОЖЕТЕ ПОЗВОНИТЬ САМИ
+                        </Typography>
+                    </div>
+
+                    <div className={'col-start-3 col-end-4 row-start-1 row-end-3'}>
+                        <Typography>
+                            Я принимаю звонки с 10:00 до 22:00. Я работаю каждый день.
+                        </Typography>
+                        <Typography>
+                            +7 (908) 571-44-48
+                        </Typography>
+                        <button className={"bg-[url('/banner/gold-texture.png')] rounded-tr-[9px] rounded-bl-[9px] bg-[#F6CF69] shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] w-full h-8"}>
+                            <Typography className={'font-comfortaa font-bold text-[0.9375rem] bg-opacity-50 text-black flex justify-center items-center shadow-[0_8px_50px_0_rgba(208,169,169,0.25)] w-full'} $as={'div'}>
+                                Подробнее
+                            </Typography>
+                        </button>
+                    </div>
+
+                    <div className={'col-start-1 col-end-2'}>
+                        <Typography>
+                            Остались вопросы?
+                            Можете сделать звонок и их задать
+                        </Typography>
+                    </div>
+
+                    <div className={'col-start-2 col-end-3'}>
+                        <Typography>
+                            Хотите узнать мнение эксперта? Позвоните, и Вас бесплатно проконсультируют обо всех нюансах вашего дела
+                        </Typography>
+                    </div>
+                </div>
+            </Container>
+        </div>
+    )
+}
+
+const Author = () => {
+    return (
+        <div className={'bg-white'}>
+            <Container>
+                <div className={'flex justify-center items-center flex-col py-2.5'}>
+                    <div className={'flex justify-start gap-x-2 cursor-pointer'}>
+                        <Typography variant={'comfortaa-2xxl'} className={'text-black text-[0.9375rem] font-light uppercase'}>
+                            Сайт сделан мной
+                        </Typography>
+                        <div className={'relative'}>
+                            <Image
+                                className={'absolute left-0 -top-1 w-[1.5rem] h-[1.5rem] max-w-none'}
+                                src={AuthorTg}
+                                alt={'telegram'}
+                            />
+                        </div>
+                    </div>
+                    <div>
+                        <Typography variant={'comfortaa-2xxl'} className={'text-black text-[0.9375rem] font-light uppercase'}>
+                            ПО ВСЕМ ВОПРОСАМ И ЗАЩИТЕ АВТОРСКИХ ПРАВ
+                        </Typography>
+                    </div>
+                </div>
+
+            </Container>
+        </div>
+    )
 }
