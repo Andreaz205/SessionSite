@@ -1,5 +1,4 @@
-import { Colors, ElementVariants, Sizes } from "shared/api/types";
-import {ForwardedRef} from "react";
+import {Colors, ElementVariants, Sizes} from "@/src/shared/api/types";
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
