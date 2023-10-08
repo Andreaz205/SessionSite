@@ -7,6 +7,15 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      keyframes: {
+        opacity: {
+          '0%': { opacity: '0%' },
+          '100%': { opacity: '100%' },
+        }
+      },
+      animation: {
+        opacity: 'opacity .2s ease',
+      },
       backgroundAboutMe: {
         'background': 'linear-gradient(180deg, rgba(169, 169, 169, 0.20) 0%, rgba(255, 255, 255, 0.00) 100%)',
         'mix-blend-mode': 'luminosity'
@@ -59,7 +68,10 @@ const config: Config = {
       'montserrat-light': 'MontserratLight, SansSerif, serif',
       'montserrat-extralight': 'MontserratExtraLight, SansSerif, serif',
       'comfortaa': 'Comfortaa, SansSerif, serif',
-      'druk-cyr': 'DrukCyr, SansSerif, serif'
+      'druk-cyr': 'DrukCyr, SansSerif, serif',
+      'raleway-black': 'RalewayBlack, SansSerif, serif',
+      'raleway-regular': 'RalewayRegular, SansSerif, serif',
+      'roboto': 'RobotoLight, SansSerif, serif',
     },
     borderRadius: {
       none: "0px",

@@ -44,7 +44,33 @@
     font-weight: normal;
 }
 
+@font-face {
+    font-family: "RalewayBlack";
+    src: local("Raleway-Black"),
+    url("./fonts/Raleway-Black.ttf") format("truetype");
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: "RalewayRegular";
+    src: local("Raleway-Regular"),
+    url("./fonts/Raleway-Regular.ttf") format("truetype");
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: "RobotoLight";
+    src: local("Roboto-Light"),
+    url("./fonts/Roboto-Light.ttf") format("truetype");
+    font-weight: normal;
+}
+
 @layer utilities{
+    .application_btn {
+        border-radius: 0px 5px;
+        background: linear-gradient(92deg, #F6CF69 0.78%, rgba(146, 108, 12, 0.14) 71.89%, rgba(246, 207, 105, 0.00) 178.11%);
+        box-shadow: 0px 4px 14px 0px #000;
+    }
     .about-me-background{
         background: linear-gradient(180deg, rgba(169, 169, 169, 0.20) 0%, rgba(255, 255, 255, 0.00) 100%);
         /*mix-blend-mode: luminosity;*/
@@ -74,6 +100,12 @@ body {
     @apply bg-black text-white;
     font-family: 'Montserrat', SansSerif, serif;
     /*background: url(<path-to-image>), lightgray 50% / cover no-repeat;*/
+}
+
+@media (max-width:768px) {
+    html {
+        font-size: 12px;
+    }
 }
 
 

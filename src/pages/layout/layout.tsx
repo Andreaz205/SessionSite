@@ -1,5 +1,5 @@
-import {Container} from "../../shared/ui";
-import React from "react";
+import {Container, IconButton, Modal} from "../../shared/ui";
+import React, {useState} from "react";
 import {Typography} from "@/src/shared/ui/typography/typography";
 import DollarLogo from '/public/header/dollar-logo.svg'
 import Image from "next/image";
@@ -7,6 +7,10 @@ import VerticalDivider from '/public/header/vertical-line.svg'
 import Vk from '/public/header/vk.svg'
 import Viber from '/public/header/viber.svg'
 import Tg from '/public/header/tg.svg'
+import BurgerMenuLogo from '/public/burger.svg'
+import Link from "next/link";
+import {useScreen} from "@/src/shared/hooks";
+import {Close} from "@/src/shared/assets/ui";
 
 // import type { Metadata } from 'next'
 // import { Inter } from 'next/font/google'
@@ -32,21 +36,36 @@ export default function Layout({
 }
 
 const Header = () => {
-  return <Container className={'relative'}>
-    <div className={'absolute z-[1] w-full left-0 top-0 h-[90px]'}>
-        <Container className={'h-full max-w-[1000px] mx-auto flex items-center px-0'}>
-          <div className={'flex justify-between items-center w-full'}>
-            <HeaderIcon />
-            <Navigation />
-          </div>
-        </Container>
-      </div>
-  </Container>
+    const screen = useScreen()
+    const [isBurgerOpen, setIsBurgerOpen] = useState(false)
+    return (
+        <>
+            {(screen === "sm" || screen === "xs") && isBurgerOpen ? (
+                <BurgerMenuPopup
+                    setIsOpen={setIsBurgerOpen}
+                    isOpen={isBurgerOpen}
+                />
+            ): null}
+            <Container className={'relative max-w-[1000px]'}>
+                <div className={'absolute z-[1] w-full left-0 top-0 md:h-[90px] h-[60px]'}>
+                    <Container className={'h-full flex items-center px-[20px]'}>
+                        <div className={'flex justify-between items-center w-full'}>
+                            <HeaderIcon />
+                            <Navigation
+                                setIsOpenBurgerPopup={setIsBurgerOpen}
+                            />
+                        </div>
+                    </Container>
+                </div>
+            </Container>
+        </>
+        )
+
 }
 
 const HeaderIcon = () => {
   return (
-      <div className={'flex items-center'}>
+      <div className={'flex items-center min-w-[13rem]'}>
           <Image src={DollarLogo} alt={'$'} className={'mr-[3px]'}/>
           <Image src={VerticalDivider} alt={'|'} className={'mr-[3px]'}/>
 
@@ -62,30 +81,57 @@ const HeaderIcon = () => {
   )
 }
 
-const Navigation = () => {
+type NavigationProps = {
+    setIsOpenBurgerPopup: (isOpen: boolean) => void
+}
+
+const Navigation = (props: NavigationProps) => {
   return (
-      <div className={'flex justify-between min-w-[650px]'}>
-        <Typography variant={'base'} className={'font-montserrat-light'}>
-            Главная
-        </Typography>
-        <Typography variant={'base'} className={'font-montserrat-light'}>
-             Обо мне
-        </Typography>
-       <Typography variant={'base'} className={'font-montserrat-light'}>
-              Услуги
-        </Typography>
-        <Typography variant={'base'} className={'font-montserrat-light'}>
-              Обратная связь
-        </Typography>
-        <SocialNetworkLinks />
-      </div>
+      <>
+          <div className={'md:hidden'}>
+              <Image
+                  src={BurgerMenuLogo}
+                  alt={'='}
+                  className={'cursor-pointer'}
+                  onClick={() => props.setIsOpenBurgerPopup(true)}
+              />
+          </div>
+
+          <div className={'flex md:justify-between justify-end md:min-w-[650px] gap-x-10'}>
+             <div className={'md:block hidden md:w-full'}>
+                 <div className={'flex justify-between w-full'}>
+                     <Typography variant={'base'} className={'font-montserrat-light'}>
+                         <Link href={'#'}>
+                             Главная
+                         </Link>
+                     </Typography>
+                     <Typography variant={'base'} className={'font-montserrat-light'}>
+                         <Link href={'#'}>
+                             Обо мне
+                         </Link>
+                     </Typography>
+                     <Typography variant={'base'} className={'font-montserrat-light'}>
+                         <Link href={'#'}>
+                             Услуги
+                         </Link>
+                     </Typography>
+                     <Typography variant={'base'} className={'font-montserrat-light'}>
+                         <Link href={'#'}>
+                             Обратная связь
+                         </Link>
+                     </Typography>
+                 </div>
+              </div>
+              <SocialNetworkLinks />
+          </div>
+      </>
   )
 }
 
 const SocialNetworkLinks = () => {
     return (
-        <div className={'relative w-[54px]'}>
-            <div className={'absolute -top-[4px] -left-[20px] -translate-y-1/2'}>
+        <div className={'relative w-[5rem] min-w-[5rem]'}>
+            <div className={'absolute md:-top-[1rem] -top-5 lg:-top-[0.25rem] -left-[1.25rem] -translate-y-1/2'}>
                 <div className={'relative h-[20px] w-[60px]'}>
                     <Image src={Vk} alt={'Вконтакте'} className={'absolute left-0 top-[1px]'}/>
                     <Image src={Tg} alt={'Телеграмм'} className={'absolute left-[17px]'}/>
@@ -93,5 +139,72 @@ const SocialNetworkLinks = () => {
                 </div>
             </div>
         </div>
+    )
+}
+
+type BurgerMenuPopup = {
+    isOpen: boolean;
+    setIsOpen: (isOpen: boolean) => void
+}
+
+const BurgerMenuPopup = (props: BurgerMenuPopup) => {
+    return (
+        <Modal
+            isOpen={props.isOpen}
+            onClose={() =>  props.setIsOpen(false)}
+        >
+            <div className={'bg-black bg-opacity-95 w-full h-[100vh] bg-no-repeat bg-cover'}>
+                <div className={'flex justify-end p-2'}>
+                    <IconButton
+                        variant="outlined"
+                        onClick={(e) => props.setIsOpen(false)}>
+                        <Close />
+                    </IconButton>
+                </div>
+
+                <div className={'flex justify-start flex-col'}>
+                    <div className={'h-[45px] flex items-center justify-center border-y-[1px] border-white border-opacity-70'}>
+                        <Typography className={'font-semibold'}>
+                            <Link
+                                href={'#'}
+                                onClick={() => props.setIsOpen(false)}
+                            >
+                                Главная
+                            </Link>
+                        </Typography>
+                    </div>
+                    <div className={'h-[45px] flex items-center justify-center border-b-[1px] border-white border-opacity-70'}>
+                        <Typography className={'font-semibold'}>
+                            <Link
+                                href={'#about-me'}
+                                onClick={() => props.setIsOpen(false)}
+                            >
+                                Обо мне
+                            </Link>
+                        </Typography>
+                    </div>
+                    <div className={'h-[45px] flex items-center justify-center border-b-[1px] border-white border-opacity-70'}>
+                        <Typography className={'font-semibold'}>
+                            <Link
+                                href={'#'}
+                                onClick={() => props.setIsOpen(false)}
+                            >
+                                Услуги
+                            </Link>
+                        </Typography>
+                    </div>
+                    <div className={'h-[45px] flex items-center justify-center border-b-[1px] border-white border-opacity-70'}>
+                        <Typography className={'font-semibold'}>
+                            <Link
+                                href={'#'}
+                                onClick={() => props.setIsOpen(false)}
+                            >
+                                Обратная связь
+                            </Link>
+                        </Typography>
+                    </div>
+                </div>
+            </div>
+        </Modal>
     )
 }

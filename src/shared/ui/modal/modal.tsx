@@ -1,5 +1,5 @@
 import cn from "classnames";
-
+import {AnimatePresence, motion} from 'framer-motion'
 import {useEffect} from "react";
 import ReactDOM from "react-dom";
 
@@ -29,39 +29,31 @@ export const Modal = (props: Modal) => {
 
     return ReactDOM.createPortal(
         <>
-            {/*<AnimatePresence mode="wait">*/}
+            <AnimatePresence mode="wait">
                 {props.isOpen && (
-                    // <motion.div
-                    //     initial={{ opacity: 0 }}
-                    //     animate={{ opacity: 1 }}
-                    //     exit={{ opacity: 0 }}
-                    //     onClick={(e) => props.onClose && props.onClose()}
-                    //     id={`modal-bg`}
-                    //     className={cn(
-                    //         "z-10 fixed w-full h-full left-0 top-0 bg-[rgba(0,0,0,0.4)]",
-                    //         props.className
-                    //     )}
-                    //     key="wrapper"
-                    // >
-                    <div
-                        onClick={(e) => props.onClose && props.onClose()}
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        onClick={() => props.onClose && props.onClose()}
+                        id={`modal-bg`}
                         className={cn(
                             "z-10 fixed w-full h-full left-0 top-0 bg-[rgba(0,0,0,0.4)]",
                             props.className
                         )}
+                        key="wrapper"
                     >
                         <div
                             onClick={(e) => e.stopPropagation()}
                             className=""
-                            // id={`children-wrapper`}
-                            // key="2"
+                            id={`children-wrapper`}
+                            key="2"
                         >
                             {props.children}
                         </div>
-                    </div>
-                    // </motion.div>
+                     </motion.div>
                 )}
-            {/*</AnimatePresence>*/}
+            </AnimatePresence>
         </>,
         document.getElementById("modal_wrapper")!
     );

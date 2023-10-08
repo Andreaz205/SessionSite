@@ -2,7 +2,7 @@ import Image from "next/image";
 import MediaBlock from "@/src/shared/ui/media-block/media-block";
 
 import CityBackground from '/public/banner/city-background.png';
-import {Container} from '../../shared/ui';
+import {Container, Modal} from '../../shared/ui';
 import ProfileLogo from '/public/banner/profile-logo.svg';
 import GroupLogo from '/public/banner/group-logo.svg';
 import HandsLogo from '/public/banner/hands-logo.svg';
@@ -31,13 +31,17 @@ import tw from "tailwind-styled-components";
 import {useMemo, useState} from "react";
 import {IDocuments} from "@/src/shared/api/types/documents/documents";
 import {AdvantageIcon, ArrowLeft, ArrowRight} from "@/src/shared/assets/ui";
-import Ticker from 'react-ticker';
+import Marquee from "react-fast-marquee";
 import {PopupGallery} from "@/src/widgets/popup-gallery/popup-gallery";
 import {Media} from "@/src/shared/api/types";
 
 export default function Home() {
+    const [isFeedbackPopupOpen, setIsFeedbackPopupOpen] = useState(false)
+
     return <>
-        <Banner />
+        <Banner
+            setIsFeedbackPopupOpen={setIsFeedbackPopupOpen}
+        />
         <Divider />
         <AboutMe />
         <Examples />
@@ -46,10 +50,37 @@ export default function Home() {
         <Services />
         <Feedback />
         <Author />
+
+        <FeedbackPopup
+            isOpen={isFeedbackPopupOpen}
+            setIsOpen={setIsFeedbackPopupOpen}
+        />
     </>
 }
 
-const Banner = () => {
+type FeedbackPopupProps = {
+    isOpen: boolean
+    setIsOpen: (isOpen: boolean) => void
+}
+
+const FeedbackPopup = (props: FeedbackPopupProps) => {
+    return (
+        <Modal
+            isOpen={props.isOpen}
+            onClose={() => props.setIsOpen(false)}
+        >
+            <div className={'bg-white'}>
+                Hello world
+            </div>
+        </Modal>
+    )
+}
+
+type BannerProps = {
+    setIsFeedbackPopupOpen: (isOpen: boolean) => void
+}
+
+const Banner = (props: BannerProps) => {
     return <div className={'h-[800px] md:h-[822px] relative pt-[90px]'}>
         <Image
             src={CityBackground}
@@ -61,7 +92,9 @@ const Banner = () => {
         <Container>
             <BannerInfo />
             <BannerMediaBlocks />
-            <ConsultButton />
+            <ConsultButton
+                setIsFeedbackPopupOpen={props.setIsFeedbackPopupOpen}
+            />
         </Container>
     </div>
 }
@@ -104,7 +137,7 @@ const bannerMediaBlockData = [
 const Divider = tw.div`bg-white h-[1px] bg-opacity-20`
 
 const BannerMediaBlocks = () => {
-    return <div className={'flex flex-nowrap justify-between mt-2'}>
+    return <div className={'flex md:flex-nowrap flex-wrap justify-between mt-2'}>
         {bannerMediaBlockData.map(data => (
             <div
                 key={data.id}
@@ -125,8 +158,8 @@ const BannerMediaBlocks = () => {
 const BannerInfo = () => {
     return (
         <div>
-            <div className={'mt-24'}>
-                <Typography variant={'xxxl'} className={'leading-[2.5rem]'}>
+            <div className={'md:mt-24 mt-8'}>
+                <Typography variant={'xxxl'} className={'leading-[4.5rem]'}>
                     Списание долгов по закону
                 </Typography>
                 <Typography variant={'xxxl'} $as={'span'}>
@@ -152,10 +185,17 @@ const BannerInfo = () => {
     );
 }
 
-const ConsultButton = () => {
+type ConsultButtonProps = {
+    setIsFeedbackPopupOpen: (isOpen: boolean) => void
+}
+
+const ConsultButton = (props: ConsultButtonProps) => {
     return <div className={'flex justify-center mt-12'}>
-        <button className={"bg-[url('/banner/gold-texture.png')] bg-[#F6CF69] rounded-[9px] shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]"}>
-            <Typography className={'font-montserrat-bold text-base  bg-opacity-50 text-black w-[320px] h-[81px] flex justify-center items-center shadow-[0_8px_50px_0_rgba(208,169,169,0.25)]'} $as={'div'}>
+        <button
+            className={"bg-[url('/banner/gold-texture.png')] bg-[#F6CF69] rounded-[9px] shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] overflow-hidden"}
+            onClick={() => props.setIsFeedbackPopupOpen(true)}
+        >
+            <Typography className={'hover:bg-[#B0B0B0] duration-sm font-montserrat-bold text-base  bg-opacity-50 text-black w-[320px] h-[81px] flex justify-center items-center shadow-[0_8px_50px_0_rgba(208,169,169,0.25)]'} $as={'div'}>
                 Бесплатная консультация
             </Typography>
         </button>
@@ -164,7 +204,10 @@ const ConsultButton = () => {
 
 const AboutMe = () => {
     return (
-        <div className={'h-[900px] relative about-me-background'}>
+        <div
+            id={'about-me'}
+            className={'h-[900px] relative about-me-background'}
+        >
             <Container>
                 <div className={'flex justify-center pt-[2.5rem]'}>
                     <Typography variant={'section-header'}>
@@ -538,13 +581,12 @@ const Installment = () => {
     return (
         <div className={"h-[729px] relative py-[34px] bg-white bg-[url('/installment/texture.png')]"}>
             <InstallmentRedLine className={'absolute top-0 left-0 w-full'}>
-                <Ticker
-                    direction={'toRight'}
+                <Marquee
+                    direction={'right'}
+                    autoFill
                 >
-                    {
-                        ({index}) => <Typography key={index} className={'min-w-[350px] font-semibold text-[1.25rem]'}>ПЛАТИ КАК УДОБНО!</Typography>
-                    }
-                </Ticker>
+                    <Typography className={'min-w-[350px] font-semibold text-[1.25rem]'}>ПЛАТИ КАК УДОБНО!</Typography>
+                </Marquee>
             </InstallmentRedLine>
             <Container>
                 <div className={'mt-8 flex justify-center flex-col items-center'}>
@@ -588,13 +630,12 @@ const Installment = () => {
                 </div>
             </Container>
             <InstallmentRedLine className={'absolute bottom-0 left-0 w-full'}>
-                <Ticker
-                    direction={'toRight'}
+                <Marquee
+                    direction={'right'}
+                    autoFill
                 >
-                    {
-                        ({index}) => <Typography key={index} className={'min-w-[350px] font-semibold text-[1.25rem]'}>ПЛАТИ КАК УДОБНО!</Typography>
-                    }
-                </Ticker>
+                    <Typography className={'min-w-[350px] font-semibold text-[1.25rem]'}>ПЛАТИ КАК УДОБНО!</Typography>
+                </Marquee>
             </InstallmentRedLine>
         </div>
     );
@@ -606,42 +647,42 @@ const footerMediaButtonsData = [
     {
         id: 1,
         title: "1",
-        media_url: ''
+        text: 'Some video text'
     },
     {
         id: 2,
         title: "2",
-        media_url: ''
+        text: 'Some video text'
     },
     {
         id: 3,
         title: "3",
-        media_url: ''
+        text: 'Some video text'
     },
     {
         id: 4,
         title: "4",
-        media_url: ''
+        text: 'Some video text'
     },
     {
         id: 5,
         title: "5",
-        media_url: ''
+        text: 'Some video text'
     },
     {
         id: 6,
         title: "6",
-        media_url: ''
+        text: 'Some video text'
     },
     {
         id: 7,
         title: "7",
-        media_url: ''
+        text: 'Some video text'
     },
     {
         id: 8,
         title: "8",
-        media_url: ''
+        text: 'Some video text'
     },
 ]
 
@@ -757,12 +798,18 @@ const Services = () => {
 }
 
 const ServicesMediaBlock = () => {
+    const [videoText, setVideoText] = useState('')
     return (
         <div className={'pb-[3.25rem]'}>
             <Container>
                 <div className={'grid grid-cols-8 grid-rows-2 mt-1.5 gap-x-[0.9rem]'}>
                     {footerMediaButtonsData.map(buttonData => (
-                        <div key={buttonData.id} className={"bg-[url('/services/btn_texture.png')] overflow-hidden border-2 border-[#CAAB60] border-opacity-40 h-[3.33rem]"}>
+                        <div
+                            key={buttonData.id}
+                            className={"bg-[url('/services/btn_texture.png')] overflow-hidden border-2 border-[#CAAB60] border-opacity-40 h-[3.33rem]"}
+                            onMouseEnter={() => setVideoText(buttonData.text)}
+                            onMouseLeave={() => setVideoText("")}
+                        >
                             <div className={"h-full bg-[#000] bg-opacity-[29%] flex items-center justify-center"}>
                                 <Typography variant={'light-2xl'} className={'text-[0.9375rem]'}>
                                     {buttonData.title}
@@ -772,10 +819,23 @@ const ServicesMediaBlock = () => {
                     ))}
                 </div>
             </Container>
-            <Container className={'px-0'}>
+            <Container className={'relative px-0'}>
+                {
+                    videoText ? (
+                        <div className={'absolute animate-opacity bg-opacity-40 z-10 top-0 left-0 h-full w-full bg-black flex justify-center items-center'}>
+                            {videoText}
+                        </div>
+                    ) : null
+                }
                 <div className={'relative pt-[40.7%]'}>
                     <div className={'absolute bg-white h-full w-full top-0 left-0'}>
-
+                        <video
+                            autoPlay
+                            muted
+                            loop
+                            className={'w-full h-full object-cover pointer-events-none select-none'}
+                            src="/services/services_video.mov"
+                        ></video>
                     </div>
                 </div>
             </Container>
@@ -813,37 +873,56 @@ const Feedback = () => {
                         Обратная связь
                     </Typography>
                 </div>
-                <div className={'grid grid-cols-[1fr_300px_min(16.7rem)]'}>
+                <div className={'grid grid-cols-[1fr_39%_min(17rem)] mt-16 gap-y-5 pb-16'}>
                     <div className={'col-start-1 col-end-3'}>
-                        <Typography>
-                            ЕСЛИ НЕТ ВОЗМОЖНОСТИ ОСТАВИТЬ ЗАЯВКУ, МОЖЕТЕ ПОЗВОНИТЬ САМИ
-                        </Typography>
+                        <div className={'max-w-[600px]'}>
+                            <Typography className={'font-raleway-black text-[#8593A9]'} $as={'span'}>
+                                ЕСЛИ НЕТ ВОЗМОЖНОСТИ ОСТАВИТЬ{' '}
+                            </Typography>
+                            <Typography className={'font-raleway-black text-[#B1B7C0]'} $as={'span'}>
+                                ЗАЯВКУ
+                            </Typography>
+                            <Typography className={'font-raleway-black text-[#8593A9]'} $as={'span'}>
+                                , МОЖЕТЕ ПОЗВОНИТЬ САМИ
+                            </Typography>
+                        </div>
+                        <div className={'h-[2px] bg-[#374343] max-w-[650px] -mt-1'}></div>
                     </div>
 
                     <div className={'col-start-3 col-end-4 row-start-1 row-end-3'}>
-                        <Typography>
-                            Я принимаю звонки с 10:00 до 22:00. Я работаю каждый день.
+                        <Typography className={'font-raleway-regular text-[#8593A9] text-[0.9375rem] text-right tracking-wide mt-2'}>
+                            Я принимаю звонки с 10:00 до 22:00.
                         </Typography>
-                        <Typography>
+                        <Typography className={'font-raleway-regular text-[#8593A9] text-[0.9375rem] text-right tracking-wide'}>
+                            Я работаю каждый день.
+                        </Typography>
+                        <Typography className={'font-roboto-regular text-right text-[1.75rem] mt-3'}>
                             +7 (908) 571-44-48
                         </Typography>
-                        <button className={"bg-[url('/banner/gold-texture.png')] rounded-tr-[9px] rounded-bl-[9px] bg-[#F6CF69] shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] w-full h-8"}>
-                            <Typography className={'font-comfortaa font-bold text-[0.9375rem] bg-opacity-50 text-black flex justify-center items-center shadow-[0_8px_50px_0_rgba(208,169,169,0.25)] w-full'} $as={'div'}>
-                                Подробнее
-                            </Typography>
-                        </button>
+                        <div className={'mt-7 flex justify-end'}>
+                            <button className={"application_btn bg-[url('/banner/gold-texture.png')] rounded-tr-[9px] rounded-bl-[9px] bg-[#F6CF69] shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] w-full h-8 max-w-[186px]"}>
+                                <Typography className={'font-roboto font-light text-[0.9375rem] bg-opacity-50 text-black flex justify-center items-center shadow-[0_8px_50px_0_rgba(208,169,169,0.25)] h-full w-full'} $as={'div'}>
+                                    Оставить заявку
+                                </Typography>
+                            </button>
+                        </div>
                     </div>
 
                     <div className={'col-start-1 col-end-2'}>
-                        <Typography>
+                        <Typography className={'font-raleway-regular text-[#8593A9]'}>
                             Остались вопросы?
+                        </Typography>
+                          <Typography className={'font-raleway-regular text-[#8593A9]'}>
                             Можете сделать звонок и их задать
                         </Typography>
                     </div>
 
                     <div className={'col-start-2 col-end-3'}>
-                        <Typography>
-                            Хотите узнать мнение эксперта? Позвоните, и Вас бесплатно проконсультируют обо всех нюансах вашего дела
+                        <Typography className={'font-raleway-regular text-[#8593A9]'}>
+                            Хотите узнать мнение эксперта?
+                        </Typography>
+                        <Typography className={'font-raleway-regular text-[#8593A9]'}>
+                            Позвоните, и Вас бесплатно проконсультируют обо всех нюансах вашего дела
                         </Typography>
                     </div>
                 </div>
