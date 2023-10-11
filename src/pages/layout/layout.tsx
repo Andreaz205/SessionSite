@@ -88,17 +88,17 @@ type NavigationProps = {
 const Navigation = (props: NavigationProps) => {
   return (
       <>
-          <div className={'md:hidden'}>
-              <Image
-                  src={BurgerMenuLogo}
-                  alt={'='}
-                  className={'cursor-pointer'}
-                  onClick={() => props.setIsOpenBurgerPopup(true)}
-              />
-          </div>
-
           <div className={'flex md:justify-between justify-end md:min-w-[650px] gap-x-10'}>
-             <div className={'md:block hidden md:w-full'}>
+              <div className={'md:hidden'}>
+                  <Image
+                      src={BurgerMenuLogo}
+                      alt={'='}
+                      priority
+                      className={'cursor-pointer'}
+                      onClick={() => props.setIsOpenBurgerPopup(true)}
+                  />
+              </div>
+              <div className={'md:block hidden md:w-full'}>
                  <div className={'flex justify-between w-full'}>
                      <Typography variant={'base'} className={'font-montserrat-light'}>
                          <Link href={'#'}>
@@ -106,17 +106,17 @@ const Navigation = (props: NavigationProps) => {
                          </Link>
                      </Typography>
                      <Typography variant={'base'} className={'font-montserrat-light'}>
-                         <Link href={'#'}>
+                         <Link href={'#about-me'}>
                              Обо мне
                          </Link>
                      </Typography>
                      <Typography variant={'base'} className={'font-montserrat-light'}>
-                         <Link href={'#'}>
+                         <Link href={'#services'}>
                              Услуги
                          </Link>
                      </Typography>
                      <Typography variant={'base'} className={'font-montserrat-light'}>
-                         <Link href={'#'}>
+                         <Link href={'#feedback'}>
                              Обратная связь
                          </Link>
                      </Typography>
@@ -131,11 +131,29 @@ const Navigation = (props: NavigationProps) => {
 const SocialNetworkLinks = () => {
     return (
         <div className={'relative w-[5rem] min-w-[5rem]'}>
-            <div className={'absolute md:-top-[1rem] -top-5 lg:-top-[0.25rem] -left-[1.25rem] -translate-y-1/2'}>
-                <div className={'relative h-[20px] w-[60px]'}>
+            <div className={'absolute top-[-0.5rem] md:-top-[0.25rem] -left-[1.25rem] -translate-y-1/2'}>
+                <div className={'relative h-[20px] w-[60px] select-none'}>
                     <Image src={Vk} alt={'Вконтакте'} className={'absolute left-0 top-[1px]'}/>
                     <Image src={Tg} alt={'Телеграмм'} className={'absolute left-[17px]'}/>
                     <Image src={Viber} alt={'Вайбер'} className={'absolute left-[36px] top-[1px]'}/>
+
+                    {/*ссылка на вк*/}
+                    <Link
+                        href={'#'}
+                        className={'block absolute top-[18px] left-[20px] z-10 h-[16px] w-[16px]'}
+                    />
+
+                    {/*ссылка на телеграм*/}
+                    <Link
+                        href={'#'}
+                        className={'block absolute top-[14px] left-[37px] z-10 h-[24px] w-[22px]'}
+                    />
+
+                    {/*ссылка на вайбер*/}
+                    <Link
+                        href={'#'}
+                        className={'block absolute top-[17px] left-[58px] z-10 h-[18px] w-[18px]'}
+                    />
                 </div>
             </div>
         </div>
@@ -186,7 +204,7 @@ const BurgerMenuPopup = (props: BurgerMenuPopup) => {
                     <div className={'h-[45px] flex items-center justify-center border-b-[1px] border-white border-opacity-70'}>
                         <Typography className={'font-semibold'}>
                             <Link
-                                href={'#'}
+                                href={'#services'}
                                 onClick={() => props.setIsOpen(false)}
                             >
                                 Услуги
@@ -196,7 +214,7 @@ const BurgerMenuPopup = (props: BurgerMenuPopup) => {
                     <div className={'h-[45px] flex items-center justify-center border-b-[1px] border-white border-opacity-70'}>
                         <Typography className={'font-semibold'}>
                             <Link
-                                href={'#'}
+                                href={'#feedback'}
                                 onClick={() => props.setIsOpen(false)}
                             >
                                 Обратная связь

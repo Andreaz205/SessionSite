@@ -1,6 +1,6 @@
-export const ArrowRight = () => {
+export const ArrowRight = (props: any) => {
     return (
-        <svg width="40" height="63" viewBox="0 0 40 63" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
+        <svg {...props} width="40" height="63" viewBox="0 0 40 63" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
             <rect y="63" width="63" height="40" transform="rotate(-90 0 63)" fill="url(#pattern0)" fillOpacity="0.6"/>
             <defs>
                 <pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">

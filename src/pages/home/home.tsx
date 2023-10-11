@@ -1,8 +1,7 @@
 import Image from "next/image";
 import MediaBlock from "@/src/shared/ui/media-block/media-block";
-
 import CityBackground from '/public/banner/city-background.png';
-import {Container, Modal} from '../../shared/ui';
+import {Container, IconButton, Modal} from '../../shared/ui';
 import ProfileLogo from '/public/banner/profile-logo.svg';
 import GroupLogo from '/public/banner/group-logo.svg';
 import HandsLogo from '/public/banner/hands-logo.svg';
@@ -28,15 +27,22 @@ import  Services4 from '/public/services/04.png';
 import  AuthorTg from '/public/author/tg.png';
 import {Typography} from "@/src/shared/ui/typography/typography";
 import tw from "tailwind-styled-components";
-import {useMemo, useState} from "react";
+import React, {useEffect, useMemo, useRef, useState} from "react";
 import {IDocuments} from "@/src/shared/api/types/documents/documents";
-import {AdvantageIcon, ArrowLeft, ArrowRight} from "@/src/shared/assets/ui";
+import {AdvantageIcon, ArrowLeft, ArrowRight, Close} from "@/src/shared/assets/ui";
 import Marquee from "react-fast-marquee";
 import {PopupGallery} from "@/src/widgets/popup-gallery/popup-gallery";
 import {Media} from "@/src/shared/api/types";
+import {useElementOnScreen} from "@/src/shared/hooks";
+import {FeedbackFormWindow} from "@/src/widgets/feedback-form-window/feedback-form-window";
 
 export default function Home() {
     const [isFeedbackPopupOpen, setIsFeedbackPopupOpen] = useState(false)
+    const [isFinalPopupOpen, setIsFinalPopupOpen] = useState(false)
+
+    const onCloseFinalPopup = () => setIsFinalPopupOpen(false)
+
+    const onOpenFinalPopup = () => setIsFinalPopupOpen(true)
 
     return <>
         <Banner
@@ -54,13 +60,38 @@ export default function Home() {
         <FeedbackPopup
             isOpen={isFeedbackPopupOpen}
             setIsOpen={setIsFeedbackPopupOpen}
+            onOpenFinalPopup={onOpenFinalPopup}
+        />
+
+        <FinalPopup
+            isOpen={isFinalPopupOpen}
+            onClose={onCloseFinalPopup}
         />
     </>
 }
 
+type FinalPopup = {
+    isOpen: boolean,
+    onClose: () => void
+}
+
+const FinalPopup = (props: FinalPopup) => {
+    return (
+        <Modal
+            isOpen={props.isOpen}
+            onClose={() => props.onClose}
+        >
+            <div className={'bg-black'}>
+                Hello world
+            </div>
+        </Modal>
+    )
+}
+
 type FeedbackPopupProps = {
-    isOpen: boolean
-    setIsOpen: (isOpen: boolean) => void
+    isOpen: boolean;
+    setIsOpen: (isOpen: boolean) => void;
+    onOpenFinalPopup: () => void;
 }
 
 const FeedbackPopup = (props: FeedbackPopupProps) => {
@@ -69,9 +100,10 @@ const FeedbackPopup = (props: FeedbackPopupProps) => {
             isOpen={props.isOpen}
             onClose={() => props.setIsOpen(false)}
         >
-            <div className={'bg-white'}>
-                Hello world
-            </div>
+            <FeedbackFormWindow
+                setIsOpen={props.setIsOpen}
+                onOpenFinalPopup={props.onOpenFinalPopup}
+            />
         </Modal>
     )
 }
@@ -81,7 +113,7 @@ type BannerProps = {
 }
 
 const Banner = (props: BannerProps) => {
-    return <div className={'h-[800px] md:h-[822px] relative pt-[90px]'}>
+    return <div className={'md:h-[822px] relative pt-[90px]'}>
         <Image
             src={CityBackground}
             alt={'City background'}
@@ -106,7 +138,7 @@ const bannerMediaBlockData = [
         description: 'Индивидуальная беседа с каждым клиентом',
         image_wrapper_classes: '',
         image_classes: 'w-[123px] h-[123px] left-1/2 -translate-x-1/2 bottom-0',
-        description_wrapper_classes: 'px-2',
+        description_wrapper_classes: 'px-2 pb-3',
     },
     {
         id: 2,
@@ -114,7 +146,7 @@ const bannerMediaBlockData = [
         description: 'Работа со всеми регионами России',
         image_wrapper_classes: '',
         image_classes: 'w-[143px] h-[143px] left-1/2 -translate-x-1/2 bottom-0',
-        description_wrapper_classes: '',
+        description_wrapper_classes: 'pb-3',
     },
     {
         id: 3,
@@ -122,7 +154,7 @@ const bannerMediaBlockData = [
         description: 'Большая степень доверия клиентуры своего города',
         image_wrapper_classes: '',
         image_classes: 'w-[153px] h-[153px] left-1/2 -translate-x-1/2 bottom-0',
-        description_wrapper_classes: '',
+        description_wrapper_classes: 'pb-3',
     },
     {
         id: 4,
@@ -130,18 +162,18 @@ const bannerMediaBlockData = [
         description: 'Цена ниже, чем у других',
         image_wrapper_classes: '',
         image_classes: 'w-[151px] h-[151px] left-1/2 -translate-x-1/2 bottom-0',
-        description_wrapper_classes: 'px-12',
+        description_wrapper_classes: 'px-12 pb-3',
     }
 ];
 
 const Divider = tw.div`bg-white h-[1px] bg-opacity-20`
 
 const BannerMediaBlocks = () => {
-    return <div className={'flex md:flex-nowrap flex-wrap justify-between mt-2'}>
+    return <div className={'flex md:flex-nowrap flex-wrap justify-between mt-20 md:mt-1'}>
         {bannerMediaBlockData.map(data => (
             <div
                 key={data.id}
-                className={'w-[20%] text-center'}
+                className={'sm:w-[20%] w-[40%] text-center'}
             >
                 <MediaBlock
                     image_url={data.image_url}
@@ -158,25 +190,25 @@ const BannerMediaBlocks = () => {
 const BannerInfo = () => {
     return (
         <div>
-            <div className={'md:mt-24 mt-8'}>
-                <Typography variant={'xxxl'} className={'leading-[4.5rem]'}>
+            <div className={'md:mt-22 mt-8'}>
+                <Typography variant={'xxxl'} className={'leading-[4.5rem] md:text-[3.5rem] text-[2rem]'}>
                     Списание долгов по закону
                 </Typography>
-                <Typography variant={'xxxl'} $as={'span'}>
+                <Typography variant={'xxxl'} className={'md:text-[3.5rem] text-[2rem]'} $as={'span'}>
                     c{' '}
                 </Typography>
-                <Typography variant={'xxxl'} className={'font-medium'} $as={'span'}>
+                <Typography variant={'xxxl'} className={'font-medium md:text-[3.5rem] text-[2rem]'} $as={'span'}>
                     выгодой{' '}
                 </Typography>
-                <Typography variant={'xxxl'} $as={'span'}>
+                <Typography variant={'xxxl'} className={'md:text-[3.5rem] text-[2rem]'} $as={'span'}>
                     до{' '}
                 </Typography>
-                <Typography variant={'xxxl'} $as={'span'} className={'font-medium'}>
+                <Typography variant={'xxxl'} $as={'span'} className={'font-medium md:text-[3.5rem] text-[2rem]'}>
                     20%
                 </Typography>
             </div>
             <div className={'mt-5'}>
-                <Typography variant={'light-2xl'} className={'font-montserrat-light'}>
+                <Typography variant={'light-2xl'} className={'font-montserrat-light md:text-2xl text-[1.25rem]'}>
                     Начну процедуру списания долгов в день обращения
                 </Typography>
             </div>
@@ -190,12 +222,12 @@ type ConsultButtonProps = {
 }
 
 const ConsultButton = (props: ConsultButtonProps) => {
-    return <div className={'flex justify-center mt-12'}>
+    return <div className={'flex justify-center md:mt-8 lg:mt-12 md:static absolute -bottom-[81px] left-0 w-full'}>
         <button
-            className={"bg-[url('/banner/gold-texture.png')] bg-[#F6CF69] rounded-[9px] shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] overflow-hidden"}
+            className={"bg-[url('/banner/gold-texture.png')] bg-[#F6CF69] rounded-[9px] shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] overflow-hidden md:w-auto w-full"}
             onClick={() => props.setIsFeedbackPopupOpen(true)}
         >
-            <Typography className={'hover:bg-[#B0B0B0] duration-sm font-montserrat-bold text-base  bg-opacity-50 text-black w-[320px] h-[81px] flex justify-center items-center shadow-[0_8px_50px_0_rgba(208,169,169,0.25)]'} $as={'div'}>
+            <Typography className={'hover:bg-[#B0B0B0] duration-sm font-montserrat-bold text-[1.25rem] md:text-base bg-opacity-50 text-black md:w-[320px] w-full h-[81px] flex justify-center items-center shadow-[0_8px_50px_0_rgba(208,169,169,0.25)]'} $as={'div'}>
                 Бесплатная консультация
             </Typography>
         </button>
@@ -206,7 +238,7 @@ const AboutMe = () => {
     return (
         <div
             id={'about-me'}
-            className={'h-[900px] relative about-me-background'}
+            className={'md:h-[900px] relative about-me-background md:pt-0 pt-[81px]'}
         >
             <Container>
                 <div className={'flex justify-center pt-[2.5rem]'}>
@@ -214,19 +246,19 @@ const AboutMe = () => {
                         Обо мне
                     </Typography>
                 </div>
-                <div className={'mt-[5.5rem] flex justify-between gap-2'}>
+                <div className={'mt-[5.5rem] flex md:flex-nowrap flex-wrap justify-between gap-2'}>
                     <div className={'w-[49%] flex flex-col justify-center'}>
                         <Typography variant={'comfortaa-2xxl'}>
                             Окончила Южно-Уральский государственный университет в 2003 году
                             по специальности юриспруденция.
                         </Typography>
 
-                        <Typography variant={'comfortaa-2xxl'} className={'mt-8'}>
+                        <Typography variant={'comfortaa-2xxl'} className={'mt-8 md:block hidden'}>
                             Работала в органах судебной системы, а также крупных юридических компаниях.
                         </Typography>
                     </div>
-                    <div className={'w-[34%] '}>
-                        <div className={'pt-[110%] relative'}>
+                    <div className={'md:w-[34%] w-full flex justify-center'}>
+                        <div className={'md:pt-[110%] pt-[98%] relative w-4/5 md:w-full'}>
                             <Image
                                 src={MePhoto}
                                 className={'absolute w-full h-full top-0 left-0'}
@@ -498,7 +530,7 @@ const Advantages = () => {
                     <Typography variant={'comfortaa-2xxl'} className={'text-[2rem] pt-24'}>
                         Почему я
                     </Typography>
-                    <div className={'flex flex-col items-center mt-14'}>
+                    <div className={'flex flex-col items-center mt-14 pl-[40px] pr-[20px]'}>
                         {
                             advantageCardsData.map(cardData => (
                                 <AdvantageCard
@@ -522,7 +554,7 @@ type AdvantageCardProps = {
 
 const AdvantageCard = (props: AdvantageCardProps) => {
     return (
-        <div className={'w-[71%] min-h-[126px] py-4 relative pr-4 pl-16 bg-advantage mb-24'}>
+        <div className={'md:w-[71%] w-full min-h-[126px] py-4 relative pr-4 pl-16 bg-advantage mb-24'}>
             <div className={'absolute -top-[28px] left-[30px] -translate-x-1/2'}>
                 <AdvantageIcon />
                 <Typography className={'font-druk-cyr text-[4.6rem] absolute z-[2] top-[50px] left-[15px] advantage-number'}>
@@ -579,7 +611,7 @@ const installmentMediaBlocksData =[
 
 const Installment = () => {
     return (
-        <div className={"h-[729px] relative py-[34px] bg-white bg-[url('/installment/texture.png')]"}>
+        <div className={"md:h-[729px] relative py-[34px] bg-white bg-[url('/installment/texture.png')]"}>
             <InstallmentRedLine className={'absolute top-0 left-0 w-full'}>
                 <Marquee
                     direction={'right'}
@@ -590,18 +622,18 @@ const Installment = () => {
             </InstallmentRedLine>
             <Container>
                 <div className={'mt-8 flex justify-center flex-col items-center'}>
-                    <Typography className={'pl-12 font-montserrat-extralight uppercase text-[5.2rem] tracking-[3.5rem] text-black'}>
+                    <Typography className={'pl-12 font-montserrat-extralight uppercase md:text-[5.2rem] text-[3rem] md:tracking-[3.5rem] tracking-[2rem] text-black'}>
                         Рассрочка
                     </Typography>
 
 
-                    <Typography className={'font-montserrat-extralight uppercase text-[3rem] tracking-[2rem] text-black -mt-3'}>
+                    <Typography className={'font-montserrat-extralight uppercase md:text-[3rem] text-[1.75rem] tracking-[2rem] text-black md:-mt-3 mt-3 text-center'}>
                         БЕЗ ПРОЦЕНТОВ
                     </Typography>
                 </div>
 
                 <div className={'flex justify-center mt-8'}>
-                    <button className={'w-[320px] h-[90px] rounded-[200px] relative'}>
+                    <button className={'sm:w-[320px] w-[152px] sm:h-[90px] h-[42px] rounded-[200px] relative'}>
                         <div className={'absolute top-0 left-0 w-full h-full bg-black filter blur-[9px] rounded-[200px]'}></div>
                         <div className={'bg-red-600 w-full h-full absolute top-0 left-0 rounded-[200px] flex justify-center items-center'}>
                             <Typography>
@@ -687,7 +719,10 @@ const footerMediaButtonsData = [
 ]
 
 const Services = () => {
-    return <div className={"bg-[#222020]"}>
+    return <div
+        id={'services'}
+        className={"bg-[#222020]"}
+    >
         <div className={"w-full bg-[url('/services/services_texture.png')] bg-no-repeat bg-cover"}>
             <Container>
                 <div className={'flex justify-center'}>
@@ -799,14 +834,38 @@ const Services = () => {
 
 const ServicesMediaBlock = () => {
     const [videoText, setVideoText] = useState('')
+    const sourceRef = useRef<HTMLSourceElement>(null)
+    const videoRef = useRef<HTMLVideoElement>(null)
+
+    const {containerRef, isVisible} = useElementOnScreen({
+        root: null,
+        rootMargin: "0px",
+        threshold: 0
+    })
+
+    const [isLoaded, setIsLoaded] = useState(false)
+
+    useEffect(() => {
+        if (sourceRef?.current && videoRef?.current) {
+            sourceRef.current.src = "/services/services_video.mov"
+        }
+    }, [sourceRef?.current, videoRef?.current])
+
+    useEffect(() => {
+        if (!isLoaded && isVisible && videoRef.current) {
+            setIsLoaded(true)
+            videoRef.current.load()
+        }
+    }, [sourceRef?.current?.src, isVisible, isLoaded])
+
     return (
-        <div className={'pb-[3.25rem]'}>
+        <div className={'pb-[3.25rem]'} ref={containerRef}>
             <Container>
                 <div className={'grid grid-cols-8 grid-rows-2 mt-1.5 gap-x-[0.9rem]'}>
                     {footerMediaButtonsData.map(buttonData => (
                         <div
                             key={buttonData.id}
-                            className={"bg-[url('/services/btn_texture.png')] overflow-hidden border-2 border-[#CAAB60] border-opacity-40 h-[3.33rem]"}
+                            className={"bg-[url('/services/btn_texture.png')] overflow-hidden border-2 border-[#CAAB60] border-opacity-40 h-[3.33rem] cursor-pointer"}
                             onMouseEnter={() => setVideoText(buttonData.text)}
                             onMouseLeave={() => setVideoText("")}
                         >
@@ -830,12 +889,15 @@ const ServicesMediaBlock = () => {
                 <div className={'relative pt-[40.7%]'}>
                     <div className={'absolute bg-white h-full w-full top-0 left-0'}>
                         <video
+                            ref={videoRef}
                             autoPlay
                             muted
                             loop
-                            className={'w-full h-full object-cover pointer-events-none select-none'}
-                            src="/services/services_video.mov"
-                        ></video>
+                            playsInline
+                            className={'w-full h-[101%] object-cover pointer-events-none select-none'}
+                        >
+                            <source ref={sourceRef}/>
+                        </video>
                     </div>
                 </div>
             </Container>
@@ -866,7 +928,10 @@ const ServicesMediaBlock = () => {
 
 const Feedback = () => {
     return (
-        <div className={'bg-[#171A1A]'}>
+        <div
+            className={'bg-[#171A1A]'}
+            id={'feedback'}
+        >
             <Container>
                 <div className={'flex justify-center'}>
                     <Typography variant={'section-header'} className={'pt-6'}>
