@@ -127,7 +127,7 @@ export const PopupGallery = (props: PopupGallery) => {
 
 const ModalContent = tw.div`bg-white w-full h-[100vh] bg-[url('/examples/mountains.png')] bg-gray-500 bg-no-repeat bg-cover`
 const PopupGalleryWrapper = tw.div`h-[85%] w-full`
-const TopControls = tw.div`flex items-center justify-end md:min-h-[4rem] px-4`
+const TopControls = tw.div`flex items-center justify-end md:min-h-[4rem] px-4 py-4`
 const ButtonWrap = tw.div``
 
 const PopupGalleryContentDesktop = tw.div`grid grid-cols-[200px_minmax(100px,_1fr)] h-full px-4`

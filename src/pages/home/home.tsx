@@ -25,6 +25,8 @@ import  Services2 from '/public/services/02.png';
 import  Services3 from '/public/services/03.png';
 import  Services4 from '/public/services/04.png';
 import  AuthorTg from '/public/author/tg.png';
+import  FinalImage from '/public/final.png';
+import  PhoneImage from '/public/telephone.png';
 import {Typography} from "@/src/shared/ui/typography/typography";
 import tw from "tailwind-styled-components";
 import React, {useEffect, useMemo, useRef, useState} from "react";
@@ -44,6 +46,8 @@ export default function Home() {
 
     const onOpenFinalPopup = () => setIsFinalPopupOpen(true)
 
+    const onOpenFeedbackPopup = () => setIsFeedbackPopupOpen(true)
+
     return <>
         <Banner
             setIsFeedbackPopupOpen={setIsFeedbackPopupOpen}
@@ -52,9 +56,9 @@ export default function Home() {
         <AboutMe />
         <Examples />
         <Advantages />
-        <Installment />
-        <Services />
-        <Feedback />
+        <Installment onOpen={onOpenFeedbackPopup}/>
+        <Services onOpen={onOpenFeedbackPopup}/>
+        <Feedback onOpen={onOpenFeedbackPopup}/>
         <Author />
 
         <FeedbackPopup
@@ -81,9 +85,37 @@ const FinalPopup = (props: FinalPopup) => {
             isOpen={props.isOpen}
             onClose={() => props.onClose}
         >
-            <div className={'bg-black'}>
-                Hello world
+            <div className={'relative w-[100vw] h-[100vh] bg-black'}>
+                <div className={'absolute z-10 top-0 left-0 w-full flex justify-end p-2'}>
+                    <IconButton
+                        variant="outlined"
+                        onClick={(e) => props.onClose()}>
+                        <Close />
+                    </IconButton>
+                </div>
+                <Image
+                    className={'object-cover top-0 left-0 w-full'}
+                    src={FinalImage}
+                    alt={''}
+                />
+
+                <div className={'absolute z-10 top-1/2 left-0 -translate-y-1/2 flex items-center flex-col justify-center w-full'}>
+                    <Typography variant={'light-2xl'} className={'text-[1.5rem] mt-[30vh]'}>
+                        Большое спасибо за обращение!
+                    </Typography>
+
+                    <Typography variant={'light-2xl'} className={'text-[0.92rem] mt-5'}>
+                        Я свяжусь с Вами в скором времени! =)
+                    </Typography>
+
+                    <Image
+                        className={'mt-10'}
+                        src={PhoneImage}
+                        alt={''}
+                    />
+                </div>
             </div>
+
         </Modal>
     )
 }
@@ -609,7 +641,11 @@ const installmentMediaBlocksData =[
     },
 ];
 
-const Installment = () => {
+type InstallmentPopup = {
+    onOpen: () => void
+}
+
+const Installment = (props: InstallmentPopup) => {
     return (
         <div className={"md:h-[729px] relative py-[34px] bg-white bg-[url('/installment/texture.png')]"}>
             <InstallmentRedLine className={'absolute top-0 left-0 w-full'}>
@@ -635,7 +671,10 @@ const Installment = () => {
                 <div className={'flex justify-center mt-8'}>
                     <button className={'sm:w-[320px] w-[152px] sm:h-[90px] h-[42px] rounded-[200px] relative'}>
                         <div className={'absolute top-0 left-0 w-full h-full bg-black filter blur-[9px] rounded-[200px]'}></div>
-                        <div className={'bg-red-600 w-full h-full absolute top-0 left-0 rounded-[200px] flex justify-center items-center'}>
+                        <div
+                            className={'bg-red-600 w-full h-full absolute top-0 left-0 rounded-[200px] flex justify-center items-center'}
+                            onClick={() => props.onOpen()}
+                        >
                             <Typography>
                                 Подробнее
                             </Typography>
@@ -679,46 +718,45 @@ const footerMediaButtonsData = [
     {
         id: 1,
         title: "1",
-        text: 'Some video text'
+        text: '- Возврат не законно удержанных средств банками по Федеральному Закону №444.'
     },
     {
         id: 2,
         title: "2",
-        text: 'Some video text'
+        text: '- Отмена судебного приказа.'
     },
     {
         id: 3,
         title: "3",
-        text: 'Some video text'
+        text: '- Возврат страховки в «Период охлаждения».'
     },
     {
         id: 4,
         title: "4",
-        text: 'Some video text'
+        text: '- Сохранение прожиточного минимума по Федеральному 3акону №234.'
     },
     {
         id: 5,
         title: "5",
-        text: 'Some video text'
+        text: '- Прекращение звонков коллекторов и банков.'
     },
     {
         id: 6,
         title: "6",
-        text: 'Some video text'
+        text: '- Работа по взаимодействию с приставами.'
     },
     {
         id: 7,
         title: "7",
-        text: 'Some video text'
-    },
-    {
-        id: 8,
-        title: "8",
-        text: 'Some video text'
+        text: '- Урегулировании вопроса в досудебном порядке с кредитными организациями, представительство в суде.'
     },
 ]
 
-const Services = () => {
+type ServicesPopup = {
+    onOpen: () => void
+}
+
+const Services = (props: ServicesPopup) => {
     return <div
         id={'services'}
         className={"bg-[#222020]"}
@@ -800,8 +838,11 @@ const Services = () => {
                         </div>
 
                         <div className={'w-full absolute bottom-0 left-0'}>
-                            <button className={"bg-[url('/banner/gold-texture.png')] bg-[#F6CF69] rounded-t-[9px] shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] w-full"}>
-                                <Typography className={'font-comfortaa font-bold text-[0.9375rem] bg-opacity-50 text-black h-[81px] flex justify-center items-center shadow-[0_8px_50px_0_rgba(208,169,169,0.25)] w-full'} $as={'div'}>
+                            <button
+                                onClick={() => props.onOpen()}
+                                className={"bg-[url('/banner/gold-texture.png')] bg-[#F6CF69] overflow-hidden rounded-t-[9px] shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] w-full"}
+                            >
+                                <Typography className={'hover:bg-[#B0B0B0] duration-sm font-comfortaa font-bold text-[0.9375rem] bg-opacity-50 text-black h-[81px] flex justify-center items-center shadow-[0_8px_50px_0_rgba(208,169,169,0.25)] w-full'} $as={'div'}>
                                     Подробнее
                                 </Typography>
                             </button>
@@ -827,13 +868,19 @@ const Services = () => {
                     </div>
                 </div>
             </Container>
-            <ServicesMediaBlock />
+            <ServicesMediaBlock
+                onOpen={props.onOpen}
+            />
         </div>
     </div>
 }
 
-const ServicesMediaBlock = () => {
-    const [videoText, setVideoText] = useState('')
+type ServicesMediaBlockPopup = {
+    onOpen: () => void
+}
+
+const ServicesMediaBlock = (props: ServicesMediaBlockPopup) => {
+    const [videoText, setVideoText] = useState(footerMediaButtonsData[0].text)
     const sourceRef = useRef<HTMLSourceElement>(null)
     const videoRef = useRef<HTMLVideoElement>(null)
 
@@ -861,16 +908,18 @@ const ServicesMediaBlock = () => {
     return (
         <div className={'pb-[3.25rem]'} ref={containerRef}>
             <Container>
-                <div className={'grid grid-cols-8 grid-rows-2 mt-1.5 gap-x-[0.9rem]'}>
+                <div className={'grid grid-cols-7 grid-rows-2 mt-1.5 gap-x-[0.9rem]'}>
                     {footerMediaButtonsData.map(buttonData => (
                         <div
                             key={buttonData.id}
                             className={"bg-[url('/services/btn_texture.png')] overflow-hidden border-2 border-[#CAAB60] border-opacity-40 h-[3.33rem] cursor-pointer"}
                             onMouseEnter={() => setVideoText(buttonData.text)}
-                            onMouseLeave={() => setVideoText("")}
                         >
                             <div className={"h-full bg-[#000] bg-opacity-[29%] flex items-center justify-center"}>
-                                <Typography variant={'light-2xl'} className={'text-[0.9375rem]'}>
+                                <Typography
+                                    variant={'light-2xl'}
+                                    className={'text-[0.9375rem]'}
+                                >
                                     {buttonData.title}
                                 </Typography>
                             </div>
@@ -882,19 +931,22 @@ const ServicesMediaBlock = () => {
                 {
                     videoText ? (
                         <div className={'absolute animate-opacity bg-opacity-40 z-10 top-0 left-0 h-full w-full bg-black flex justify-center items-center'}>
-                            {videoText}
+                            <Typography className={'lg:text-[2.25rem] md:text-[1.75rem] font-bold md:tracking-[0.225rem] tracking-[0.15rem] text-center px-40'}>
+                                {videoText}
+                            </Typography>
+
                         </div>
                     ) : null
                 }
                 <div className={'relative pt-[40.7%]'}>
-                    <div className={'absolute bg-white h-full w-full top-0 left-0'}>
+                    <div className={'absolute bg-black h-full w-full top-0 left-0'}>
                         <video
                             ref={videoRef}
                             autoPlay
                             muted
                             loop
                             playsInline
-                            className={'w-full h-[101%] object-cover pointer-events-none select-none'}
+                            className={'w-full h-[100%] object-cover pointer-events-none select-none'}
                         >
                             <source ref={sourceRef}/>
                         </video>
@@ -914,7 +966,10 @@ const ServicesMediaBlock = () => {
                     </div>
 
                     <div className={'absolute top-0 right-0 w-[3.25rem] h-full'}>
-                        <button className={"bg-[url('/banner/gold-texture.png')] bg-[#F6CF69] shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] w-full h-full"}>
+                        <button
+                            onClick={() => props.onOpen()}
+                            className={"bg-[url('/banner/gold-texture.png')] bg-[#F6CF69] shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] w-full h-full hover:bg-[#B0B0B0] duration-sm"}
+                        >
                             <Typography className={'font-comfortaa font-bold text-[0.9375rem] rotate-90 bg-opacity-50 text-black flex justify-center items-center shadow-[0_8px_50px_0_rgba(208,169,169,0.25)] w-full'} $as={'div'}>
                                 Подробнее
                             </Typography>
@@ -926,7 +981,11 @@ const ServicesMediaBlock = () => {
     )
 }
 
-const Feedback = () => {
+type FeedbackPopup = {
+    onOpen: () => void
+}
+
+const Feedback = (props: FeedbackPopup) => {
     return (
         <div
             className={'bg-[#171A1A]'}
@@ -939,7 +998,7 @@ const Feedback = () => {
                     </Typography>
                 </div>
                 <div className={'grid grid-cols-[1fr_39%_min(17rem)] mt-16 gap-y-5 pb-16'}>
-                    <div className={'col-start-1 col-end-3'}>
+                    <div className={'md:block hidden col-start-1 col-end-3'}>
                         <div className={'max-w-[600px]'}>
                             <Typography className={'font-raleway-black text-[#8593A9]'} $as={'span'}>
                                 ЕСЛИ НЕТ ВОЗМОЖНОСТИ ОСТАВИТЬ{' '}
@@ -965,7 +1024,10 @@ const Feedback = () => {
                             +7 (908) 571-44-48
                         </Typography>
                         <div className={'mt-7 flex justify-end'}>
-                            <button className={"application_btn bg-[url('/banner/gold-texture.png')] rounded-tr-[9px] rounded-bl-[9px] bg-[#F6CF69] shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] w-full h-8 max-w-[186px]"}>
+                            <button
+                                onClick={() => props.onOpen()}
+                                className={"hover:bg-[#B0B0B0] hover:bg-none duration-sm application_btn bg-[url('/banner/gold-texture.png')] rounded-tr-[9px] rounded-bl-[9px] bg-[#F6CF69] shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] w-full h-8 max-w-[186px]"}
+                            >
                                 <Typography className={'font-roboto font-light text-[0.9375rem] bg-opacity-50 text-black flex justify-center items-center shadow-[0_8px_50px_0_rgba(208,169,169,0.25)] h-full w-full'} $as={'div'}>
                                     Оставить заявку
                                 </Typography>
@@ -973,7 +1035,7 @@ const Feedback = () => {
                         </div>
                     </div>
 
-                    <div className={'col-start-1 col-end-2'}>
+                    <div className={'col-start-1 col-end-2 md:block hidden'}>
                         <Typography className={'font-raleway-regular text-[#8593A9]'}>
                             Остались вопросы?
                         </Typography>
@@ -982,7 +1044,7 @@ const Feedback = () => {
                         </Typography>
                     </div>
 
-                    <div className={'col-start-2 col-end-3'}>
+                    <div className={'col-start-2 col-end-3 md:block hidden'}>
                         <Typography className={'font-raleway-regular text-[#8593A9]'}>
                             Хотите узнать мнение эксперта?
                         </Typography>
