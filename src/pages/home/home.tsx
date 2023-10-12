@@ -35,6 +35,7 @@ import  Services2 from '/public/services/02.png';
 import  Services3 from '/public/services/03.png';
 import  Services4 from '/public/services/04.png';
 import  AuthorTg from '/public/author/tg.png';
+import  AuthorVk from '/public/vk.png';
 import  FinalImage from '/public/final.png';
 import  PhoneImage from '/public/telephone.png';
 import  Circle from '/public/circle.svg';
@@ -1062,10 +1063,10 @@ const ServicesMediaBlock = (props: ServicesMediaBlockPopup) => {
                         {footerMediaButtonsData.map(buttonData => (
                             <div
                                 key={buttonData.id}
-                                className={"bg-[url('/services/btn_texture.png')] overflow-hidden border-2 border-[#CAAB60] border-opacity-40 h-[3.33rem] cursor-pointer"}
+                                className={"bg-[url('/services/btn_texture.png')] overflow-hidden border-2 border-[#CAAB60] border-opacity-40 relative pt-[40.5%] cursor-pointer"}
                                 onMouseEnter={() => setVideoText(buttonData.text)}
                             >
-                                <div className={"h-full bg-[#000] bg-opacity-[29%] flex items-center justify-center"}>
+                                <div className={"h-full bg-[#000] bg-opacity-[29%] flex items-center justify-center absolute w-full top-0 left-0"}>
                                     <Typography
                                         variant={'light-2xl'}
                                         className={'text-[0.9375rem]'}
@@ -1075,6 +1076,33 @@ const ServicesMediaBlock = (props: ServicesMediaBlockPopup) => {
                                 </div>
                             </div>
                         ))}
+                        <div className={'w-full relative pt-[40.5%] overflow-hidden'}>
+                            <div className={'absolute top-[40%] left-0 h-[1px] w-[140%] bg-[#5D5D5D] rotate-[40deg]'}></div>
+                        </div>
+
+                        <div className={'w-full relative pt-[40.5%] overflow-hidden'}>
+                            <div className={'absolute top-[40%] left-0 h-[1px] w-[140%] bg-[#5D5D5D] rotate-[40deg]'}></div>
+                        </div>
+
+                        <div className={'w-full relative pt-[40.5%] overflow-hidden'}>
+                            <div className={'absolute top-[40%] left-0 h-[1px] w-[140%] bg-[#5D5D5D] rotate-[40deg]'}></div>
+                        </div>
+
+                        <div className={'w-full relative pt-[40.5%] overflow-hidden'}>
+                            <div className={'absolute top-1/2 -translate-x-1/2 -translate-y-1/2 left-1/2 h-[1px] w-[140%] bg-[#5D5D5D] rotate-[90deg]'}></div>
+                        </div>
+
+                        <div className={'w-full relative pt-[40.5%] overflow-hidden'}>
+                            <div className={'absolute top-[40%] right-0 h-[1px] w-[140%] bg-[#5D5D5D] rotate-[-40deg]'}></div>
+                        </div>
+
+                        <div className={'w-full relative pt-[40.5%] overflow-hidden'}>
+                            <div className={'absolute top-[40%] right-0 h-[1px] w-[140%] bg-[#5D5D5D] rotate-[-40deg]'}></div>
+                        </div>
+
+                        <div className={'w-full relative pt-[40.5%] overflow-hidden'}>
+                            <div className={'absolute top-[40%] right-0 h-[1px] w-[140%] bg-[#5D5D5D] rotate-[-40deg]'}></div>
+                        </div>
                     </div>
                 </div>
             </Container>
@@ -1137,7 +1165,33 @@ const ServicesMediaBlock = (props: ServicesMediaBlockPopup) => {
                 </div>
             </Container>
             <Container className={'md:px-[20px] px-0'}>
-                <div className={'md:pb-0 pb-4 md:mt-[4.25rem] md:pt-0 pt-4 md:bg-[#000] md:bg-opacity-[29%] md:rounded-[20px] bg-[#1C1A1A] overflow-hidden md:h-[14.1rem] relative'}>
+                <div className={'md:block hidden'}>
+                    <div className={'grid grid-cols-7 grid-rows-1 gap-x-[0.9rem]'}>
+                        <div className={'w-full relative pt-[40.5%] overflow-hidden'}>
+                            <div className={'absolute left-[49%] h-[1px] w-[100%] bg-[#5D5D5D] rotate-[90deg]'}></div>
+                        </div>
+                        <div className={'w-full relative pt-[40.5%] overflow-hidden'}>
+                            <div className={'absolute left-[49%] h-[1px] w-[100%] bg-[#5D5D5D] rotate-[90deg]'}></div>
+                        </div>
+                        <div className={'w-full relative pt-[40.5%] overflow-hidden'}>
+                            <div className={'absolute left-[49%] h-[1px] w-[100%] bg-[#5D5D5D] rotate-[90deg]'}></div>
+                        </div>
+                        <div className={'w-full relative pt-[40.5%] overflow-hidden'}>
+                            <div className={'absolute top-1/2 -translate-x-1/2 -translate-y-1/2 left-1/2 h-[1px] w-[140%] bg-[#5D5D5D] rotate-[90deg]'}></div>
+                        </div>
+                        <div className={'w-full relative pt-[40.5%] overflow-hidden'}>
+                            <div className={'absolute right-[49%] h-[1px] w-[100%] bg-[#5D5D5D] rotate-[90deg]'}></div>
+                        </div>
+                        <div className={'w-full relative pt-[40.5%] overflow-hidden'}>
+                            <div className={'absolute right-[49%] h-[1px] w-[100%] bg-[#5D5D5D] rotate-[90deg]'}></div>
+                        </div>
+                        <div className={'w-full relative pt-[40.5%] overflow-hidden'}>
+                            <div className={'absolute right-[49%] h-[1px] w-[100%] bg-[#5D5D5D] rotate-[90deg]'}></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className={'md:pb-0 pb-4 md:pt-0 pt-4 md:bg-[#000] md:bg-opacity-[29%] md:rounded-[20px] bg-[#1C1A1A] overflow-hidden md:h-[14.1rem] relative'}>
                     <Image
                         className={'max-w-none h-[11.9rem] w-[12.44rem] -mt-12 -ml-8'}
                         src={Services4}
@@ -1253,19 +1307,38 @@ const Author = () => {
         <div className={'bg-white'}>
             <Container>
                 <div className={'flex justify-center items-center flex-col py-2.5'}>
-                    <div className={'flex justify-start gap-x-2 cursor-pointer'}>
-                        <Typography variant={'comfortaa-2xxl'} className={'text-black text-[0.9375rem] font-light uppercase'}>
-                            Сайт сделан мной
+                    <div className={'flex justify-center gap-x-2 cursor-pointer'}>
+                        <Typography variant={'comfortaa-2xxl'} className={'text-black text-[0.9375rem] font-light uppercase'} $as={'span'}>
+                            Дизайн выполнил
                         </Typography>
-                        <div className={'relative'}>
+                        <Link
+                            href={'https://t.me/zszszszdd'}
+                            target={'_blank'}
+                            className={'relative mr-4'}
+                        >
                             <Image
                                 className={'absolute left-0 -top-1 w-[1.5rem] h-[1.5rem] max-w-none'}
                                 src={AuthorTg}
                                 alt={'telegram'}
                             />
-                        </div>
+                        </Link>
+
+                        <Typography variant={'comfortaa-2xxl'} className={'text-black text-[0.9375rem] font-light uppercase'} $as={'span'}>
+                           , сайт разработал
+                        </Typography>
+                        <Link
+                            href={'https://vk.com/andrei6285'}
+                            target={'_blank'}
+                            className={'relative'}
+                        >
+                            <Image
+                                className={'absolute left-0 -top-1 w-[1.5rem] h-[1.5rem] max-w-none'}
+                                src={AuthorVk}
+                                alt={'вк'}
+                            />
+                        </Link>
                     </div>
-                    <div>
+                    <div className={'flex justify-center'}>
                         <Typography variant={'comfortaa-2xxl'} className={'text-black text-[0.9375rem] font-light uppercase'}>
                             ПО ВСЕМ ВОПРОСАМ И ЗАЩИТЕ АВТОРСКИХ ПРАВ
                         </Typography>
