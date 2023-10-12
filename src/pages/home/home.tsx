@@ -11,7 +11,20 @@ import InstallmentMedia2 from '/public/installment/media_2.png';
 import InstallmentMedia3 from '/public/installment/media_3.png';
 import InstallmentMedia4 from '/public/installment/media_4.png';
 import MePhoto from '/public/me/me.png';
-import DocumentOne from '/public/examples/docs/document_1.png';
+import DocumentOnePageOne from '/public/examples/docs/document_1/page_1.png';
+import DocumentOnePageTwo from '/public/examples/docs/document_1/page_2.jpg';
+import DocumentOnePageThree from '/public/examples/docs/document_1/page_3.jpg';
+import DocumentTwoPageOne from '/public/examples/docs/document_2/page_1.png';
+import DocumentTwoPageTwo from '/public/examples/docs/document_2/page_2.jpg';
+import DocumentTwoPageThree from '/public/examples/docs/document_2/page_3.jpg';
+import DocumentTwoPageFour from '/public/examples/docs/document_2/page_4.jpg';
+import DocumentThreePageOne from '/public/examples/docs/document_3/page_1.png';
+import DocumentThreePageTwo from '/public/examples/docs/document_3/page_2.jpg';
+import DocumentThreePageThree from '/public/examples/docs/document_3/page_3.jpg';
+import DocumentFourPageOne from '/public/examples/docs/document_4/page_1.png';
+import DocumentFourPageTwo from '/public/examples/docs/document_4/page_2.jpg';
+import DocumentFourPageThree from '/public/examples/docs/document_4/page_3.jpg';
+import DocumentFourPageFour from '/public/examples/docs/document_4/page_4.jpg';
 import DocumentTwo from '/public/examples/docs/document_2.png';
 import DocumentThree from '/public/examples/docs/document_3.png';
 import DocumentFour from '/public/examples/docs/document_4.png';
@@ -329,26 +342,92 @@ const DocsData: IDocuments[] = [
     {
         id: 1,
         title: "Дело №1",
-        doc_url: DocumentOne,
-        card_url: CardOne
+        doc_url: DocumentOnePageOne,
+        card_url: CardOne,
+        pages: [
+            {
+                id: 1,
+                doc_url: DocumentOnePageOne,
+            },
+            {
+                id: 2,
+                doc_url: DocumentOnePageTwo,
+            },
+            {
+                id: 3,
+                doc_url: DocumentOnePageThree,
+            },
+
+        ]
     },
     {
         id: 2,
         title: "Дело №2",
-        doc_url: DocumentTwo,
-        card_url: CardTwo
+        doc_url: DocumentTwoPageOne,
+        card_url: CardTwo,
+        pages: [
+            {
+                id: 1,
+                doc_url: DocumentTwoPageOne,
+            },
+            {
+                id: 2,
+                doc_url: DocumentTwoPageTwo,
+            },
+            {
+                id: 3,
+                doc_url: DocumentTwoPageThree,
+            },
+            {
+                id: 4,
+                doc_url: DocumentTwoPageFour,
+            },
+        ]
     },
     {
         id: 3,
         title: "Дело №3",
-        doc_url: DocumentThree,
-        card_url: CardThree
+        doc_url: DocumentThreePageOne,
+        card_url: CardThree,
+        pages: [
+            {
+                id: 1,
+                doc_url: DocumentThreePageOne,
+            },
+            {
+                id: 2,
+                doc_url: DocumentThreePageTwo,
+            },
+            {
+                id: 3,
+                doc_url: DocumentThreePageThree,
+            },
+        ]
     },
     {
         id: 4,
         title: "Дело №4",
-        doc_url: DocumentFour,
-        card_url: CardFour
+        doc_url: DocumentFourPageOne,
+        card_url: CardFour,
+        pages: [
+            {
+                id: 1,
+                doc_url: DocumentFourPageOne,
+            },
+            {
+                id: 2,
+                doc_url: DocumentFourPageTwo,
+            },
+            {
+                id: 3,
+                doc_url: DocumentFourPageThree,
+            },
+            {
+                id: 4,
+                doc_url: DocumentFourPageFour,
+            },
+
+        ]
     },
 ];
 
@@ -395,11 +474,12 @@ const Docs = (props: DocsProps) => {
     }
 
     // POPUP
-    const medias: Media[] = useMemo(() => props.docs.map(doc => ({
-        id: doc.id,
-        image_url: doc.doc_url,
-        video_url: null
-    })), [props.docs])
+    const medias: Media[]  = useMemo(() => activeDocument
+        ? activeDocument?.pages.map(doc => ({
+            id: doc.id,
+            image_url: doc.doc_url,
+            video_url: null
+        })) : [], [activeDocument])
 
     const [activeMedia, setActiveMedia] = useState<Media | null>(null)
 
