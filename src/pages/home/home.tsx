@@ -887,7 +887,26 @@ type ServicesPopup = {
     onOpen: () => void
 }
 
+const miniBlockHoveredText = {
+    first: {
+        original: 'Фиксация суммы долга',
+        hovered: 'За счет прекращения начисления процентов и неустоек'
+    },
+    second: {
+        original: 'Частичное списание долга',
+        hovered: 'Уменьшение начисленных штрафов, пеней и неустоек.'
+    },
+    third: {
+        original: 'Посильные платежи',
+        hovered: 'Выплата зафиксированной задолженности удобной для вас суммой.'
+    }
+}
 const Services = (props: ServicesPopup) => {
+    const [miniBlocksData, setMiniBlocksData] = useState({
+        first: miniBlockHoveredText.first.original,
+        second: miniBlockHoveredText.second.original,
+        third: miniBlockHoveredText.third.original,
+    })
     return <div
         id={'services'}
         className={"md:bg-[#222020]"}
@@ -960,9 +979,20 @@ const Services = (props: ServicesPopup) => {
                     </div>
 
                     <div className={'bg-[#000] bg-opacity-[29%] overflow-hidden row-start-3 row-end-4 md:border-2 border-[1px] border-[#CAAB60] border-opacity-40 mb-[0.3rem]'}>
-                        <div className={"md:pb-0 md:pt-0 pt-3 pb-1 md:px-0 px-[20px] h-full bg-[url('/services/service_item_texture.png')] bg-cover bg-no-repeat flex items-center md:justify-center justify-between"}>
+                        <div
+                            onMouseEnter={() => setMiniBlocksData((data) => {
+                                data.first = miniBlockHoveredText.first.hovered
+                                return {...data}
+                            })}
+                            onMouseLeave={() => setMiniBlocksData({
+                                first: miniBlockHoveredText.first.original,
+                                second: miniBlockHoveredText.second.original,
+                                third: miniBlockHoveredText.third.original
+                            })}
+                            className={"md:pb-0 md:pt-0 pt-3 pb-1 md:px-0 px-[20px] h-full bg-[url('/services/service_item_texture.png')] hover:bg-[url('/services/change_texture.png')] bg-cover bg-no-repeat flex items-center md:justify-center justify-between"}
+                        >
                             <Typography variant={'light-2xl'} className={'md:text-[0.9375rem] text-[1.25rem]'}>
-                                Фиксация суммы долга
+                                {miniBlocksData.first}
                             </Typography>
                             <Image
                                 className={'md:hidden cursor-pointer'}
@@ -973,9 +1003,20 @@ const Services = (props: ServicesPopup) => {
                     </div>
 
                     <div className={'bg-[#000] bg-opacity-[29%] overflow-hidden row-start-4 row-end-5 md:border-2 border-[1px] border-[#CAAB60] border-opacity-40 my-[0.3rem]'}>
-                        <div className={"md:pb-0 md:pt-0 pt-3 pb-1 md:px-0 px-[20px] h-full bg-[url('/services/service_item_texture.png')] bg-cover bg-no-repeat flex items-center md:justify-center justify-between"}>
+                        <div
+                            onMouseEnter={() => setMiniBlocksData((data) => {
+                                data.second = miniBlockHoveredText.second.hovered
+                                return {...data}
+                            })}
+                            onMouseLeave={() => setMiniBlocksData({
+                                first: miniBlockHoveredText.first.original,
+                                second: miniBlockHoveredText.second.original,
+                                third: miniBlockHoveredText.third.original
+                            })}
+                            className={"md:pb-0 md:pt-0 pt-3 pb-1 md:px-0 px-[20px] h-full bg-[url('/services/service_item_texture.png')] hover:bg-[url('/services/change_texture.png')] bg-cover bg-no-repeat flex items-center md:justify-center justify-between"}
+                        >
                             <Typography variant={'light-2xl'} className={'md:text-[0.9375rem] text-[1.25rem]'}>
-                                Частичное списание долга
+                                {miniBlocksData.second}
                             </Typography>
                             <Image
                                 className={'md:hidden cursor-pointer'}
@@ -986,9 +1027,20 @@ const Services = (props: ServicesPopup) => {
                     </div>
 
                     <div className={'bg-[#000] bg-opacity-[29%] overflow-hidden row-start-5 row-end-6 md:border-2 border-[1px] border-[#CAAB60] border-opacity-40 mt-[0.3rem]'}>
-                        <div className={"md:pb-0 md:pt-0 pt-3 pb-1 md:px-0 px-[20px] h-full bg-[url('/services/service_item_texture.png')] bg-cover bg-no-repeat flex items-center md:justify-center justify-between"}>
+                        <div
+                            onMouseEnter={() => setMiniBlocksData((data) => {
+                                data.third = miniBlockHoveredText.third.hovered
+                                return {...data}
+                            })}
+                            onMouseLeave={() => setMiniBlocksData({
+                                first: miniBlockHoveredText.first.original,
+                                second: miniBlockHoveredText.second.original,
+                                third: miniBlockHoveredText.third.original
+                            })}
+                            className={"md:pb-0 md:pt-0 pt-3 pb-1 md:px-0 px-[20px] h-full bg-[url('/services/service_item_texture.png')] hover:bg-[url('/services/change_texture.png')] bg-cover bg-no-repeat flex items-center md:justify-center justify-between"}
+                        >
                             <Typography variant={'light-2xl'} className={'md:text-[0.9375rem] text-[1.25rem]'}>
-                                Посильные платежи
+                                {miniBlocksData.third}
                             </Typography>
                             <Image
                                 className={'md:hidden cursor-pointer'}
@@ -1314,7 +1366,7 @@ const Author = () => {
                         <Link
                             href={'https://t.me/zszszszdd'}
                             target={'_blank'}
-                            className={'relative mr-4'}
+                            className={'relative w-[0.75rem] mr-4'}
                         >
                             <Image
                                 className={'absolute left-0 -top-1 w-[1.5rem] h-[1.5rem] max-w-none'}
@@ -1329,7 +1381,7 @@ const Author = () => {
                         <Link
                             href={'https://vk.com/andrei6285'}
                             target={'_blank'}
-                            className={'relative'}
+                            className={'relative w-[1.75rem]'}
                         >
                             <Image
                                 className={'absolute left-0 -top-1 w-[1.5rem] h-[1.5rem] max-w-none'}
