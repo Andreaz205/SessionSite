@@ -1,4 +1,4 @@
-export const AdvantageIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="158" height="225" viewBox="0 0 158 225" fill="none">
+export const AdvantageIcon = (props: any) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="158" height="225" viewBox="0 0 158 225" fill="none">
     <g filter="url(#filter0_f_72_155)">
         <ellipse cx="78.5" cy="112.5" rx="63.5" ry="8.5" transform="rotate(-90 78.5 112.5)" fill="black"/>
     </g>

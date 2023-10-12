@@ -131,11 +131,7 @@ export const FeedbackFormWindow = (props: FeedbackFormWindowProps) => {
         {
             id: 5,
             selected_variant: null as null|number,
-        },
-        {
-            id: 6,
-            selected_variant: null as null|number,
-        },
+        }
     ])
     const handleChange = (changeData: {id: number, selected_variant: number}) => {
         // @ts-ignore
@@ -200,7 +196,7 @@ export const FeedbackFormWindow = (props: FeedbackFormWindowProps) => {
                         </div>
                         <div className={"bg-[url('/queez-bg.png')] pt-[2.75rem]"}>
                             {activeElement.variants.map(question => (
-                                <div key={question.id} className={'flex justify-between items-center pb-[2rem] pl-[3rem] pr-[2rem]'}>
+                                <div key={question.id + Date.now()} className={'flex justify-between items-center pb-[2rem] pl-[3rem] pr-[2rem]'}>
                                     <input
                                         className={'fixed w-0 h-0'}
                                         name={`question-${activeElement.id}`}
@@ -239,7 +235,7 @@ export const FeedbackFormWindow = (props: FeedbackFormWindowProps) => {
                                 ) : null}
 
                                 {(activeElement.id !== feedbackFormData.length)
-                                || (activeElement.id === feedbackFormData.length) && selectedData.some(field => !field.selected_variant)  ? (
+                                || (activeElement.id === feedbackFormData.length) && !selectedData.some(field => !field.selected_variant)  ? (
                                     <Image
                                         onClick={() => next(activeElement.id)}
                                         className={'cursor-pointer'}
@@ -248,7 +244,7 @@ export const FeedbackFormWindow = (props: FeedbackFormWindowProps) => {
                                     />
                                 ) : null}
 
-                                {activeElement.id === feedbackFormData.length && !selectedData.some(field => !field.selected_variant) ? (
+                                {activeElement.id === feedbackFormData.length && selectedData.some(field => !field.selected_variant) ? (
                                     <Typography className={'text-black text-[1rem] font-semibold'}>
                                         Необходимо заполнить все поля!
                                     </Typography>

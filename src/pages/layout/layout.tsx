@@ -7,7 +7,7 @@ import VerticalDivider from '/public/header/vertical-line.svg'
 import Vk from '/public/header/vk.svg'
 import Viber from '/public/header/viber.svg'
 import Tg from '/public/header/tg.svg'
-import BurgerMenuLogo from '/public/burger.svg'
+import BurgerMenuLogo from '/public/burger.png'
 import Link from "next/link";
 import {useScreen} from "@/src/shared/hooks";
 import {Close} from "@/src/shared/assets/ui";
