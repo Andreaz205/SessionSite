@@ -1,7 +1,7 @@
 import {Container, IconButton, Modal} from "../../shared/ui";
 import React, {useState} from "react";
 import {Typography} from "@/src/shared/ui/typography/typography";
-import DollarLogo from '/public/header/dollar-logo.svg'
+import LogoWhite from '/public/logo-white.svg'
 import Image from "next/image";
 import VerticalDivider from '/public/header/vertical-line.svg'
 import Vk from '/public/header/vk.svg'
@@ -66,7 +66,7 @@ const Header = () => {
 const HeaderIcon = () => {
   return (
       <div className={'flex items-center min-w-[13rem]'}>
-          <Image src={DollarLogo} alt={'$'} className={'mr-[3px]'}/>
+          <Image src={LogoWhite} alt={'Ю'} className={'mr-[3px] w-[30px] h-[30px]]'}/>
           <Image src={VerticalDivider} alt={'|'} className={'mr-[3px]'}/>
 
           <div className={'flex flex-col mt-[5px]'}>
@@ -88,7 +88,7 @@ type NavigationProps = {
 const Navigation = (props: NavigationProps) => {
   return (
       <>
-          <div className={'flex md:justify-between justify-end md:min-w-[650px] gap-x-10'}>
+          <div className={'flex md:justify-between justify-end md:w-[65%] gap-x-10'}>
               <div className={'md:hidden'}>
                   <Image
                       src={BurgerMenuLogo}
@@ -139,19 +139,22 @@ const SocialNetworkLinks = () => {
 
                     {/*ссылка на вк*/}
                     <Link
-                        href={'#'}
+                        target={'_blank'}
+                        href={'https://vk.com/spisaniedolgovgulevich'}
                         className={'block absolute top-[18px] left-[20px] z-10 h-[16px] w-[16px]'}
                     />
 
                     {/*ссылка на телеграм*/}
                     <Link
+                        target={'_blank'}
                         href={'#'}
                         className={'block absolute top-[14px] left-[37px] z-10 h-[24px] w-[22px]'}
                     />
 
                     {/*ссылка на вайбер*/}
                     <Link
-                        href={'#'}
+                        target={'_blank'}
+                        href={'https://wa.me/+79085714448'}
                         className={'block absolute top-[17px] left-[58px] z-10 h-[18px] w-[18px]'}
                     />
                 </div>

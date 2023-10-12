@@ -25,9 +25,6 @@ import DocumentFourPageOne from '/public/examples/docs/document_4/page_1.png';
 import DocumentFourPageTwo from '/public/examples/docs/document_4/page_2.jpg';
 import DocumentFourPageThree from '/public/examples/docs/document_4/page_3.jpg';
 import DocumentFourPageFour from '/public/examples/docs/document_4/page_4.jpg';
-import DocumentTwo from '/public/examples/docs/document_2.png';
-import DocumentThree from '/public/examples/docs/document_3.png';
-import DocumentFour from '/public/examples/docs/document_4.png';
 import CardOne from '/public/examples/cards/card_1.png';
 import CardTwo from '/public/examples/cards/card_2.png';
 import CardThree from '/public/examples/cards/card_3.png';
@@ -52,6 +49,7 @@ import {PopupGallery} from "@/src/widgets/popup-gallery/popup-gallery";
 import {Media} from "@/src/shared/api/types";
 import {useElementOnScreen, useScreen} from "@/src/shared/hooks";
 import {FeedbackFormWindow} from "@/src/widgets/feedback-form-window/feedback-form-window";
+import Link from "next/link";
 
 export default function Home() {
     const [isFeedbackPopupOpen, setIsFeedbackPopupOpen] = useState(false)
@@ -130,7 +128,6 @@ const FinalPopup = (props: FinalPopup) => {
                     />
                 </div>
             </div>
-
         </Modal>
     )
 }
@@ -256,7 +253,7 @@ const BannerInfo = () => {
             </div>
             <div className={'mt-5'}>
                 <Typography variant={'light-2xl'} className={'font-montserrat-light md:text-2xl text-[1.25rem]'}>
-                    Начну процедуру списания долгов в день обращения
+                    Начну работу по списанию долгов в день обращения
                 </Typography>
             </div>
         </div>
@@ -1207,9 +1204,13 @@ const Feedback = (props: FeedbackPopup) => {
                         <Typography className={'font-raleway-regular text-[#8593A9] text-[0.9375rem] md:text-right text-center tracking-wide'}>
                             Я работаю каждый день.
                         </Typography>
-                        <Typography className={'font-roboto-regular md:text-right text-center text-[1.75rem] mt-3'}>
-                            +7 (908) 571-44-48
-                        </Typography>
+                        <Link
+                            href={'tel:89085714448'}
+                        >
+                            <Typography className={'font-roboto-regular md:text-right text-center text-[1.75rem] mt-3'}>
+                                +7 (908) 571-44-48
+                            </Typography>
+                        </Link>
                         <div className={'mt-7 flex md:justify-end justify-center'}>
                             <button
                                 onClick={() => props.onOpen()}

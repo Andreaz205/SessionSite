@@ -3,7 +3,9 @@ import { Html, Head, Main, NextScript } from "next/document";
 export default function Document() {
     return (
         <Html lang="ru">
-            <Head></Head>
+            <Head>
+                <link rel="stortcut icon" href="/logo-black.svg" sizes="any" />
+            </Head>
             <body>
             <Main />
             <div
