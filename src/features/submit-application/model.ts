@@ -1,29 +1,17 @@
+import {IQuestion, storeApplicationRequest} from "@/src/shared/api/requests";
+
 const fs = require('fs')
 
-export interface ISubmitApplication {
+export interface ISubmitApplicationContacts {
     phone: string,
     city: string,
     name: string
 }
 
-export interface ISubmitApplicationData extends ISubmitApplication {
-    date: Date
-}
+const handleSubmitApplication = async (contacts: ISubmitApplicationContacts, questions: IQuestion[]) => {
+    const date = (new Date()).toDateString()
 
-const handleSubmitApplication = async (contacts: ISubmitApplication, questions: any) => {
-    console.log(process.cwd())
-    const data = JSON.stringify({...contacts, questions: questions, date: Date})
-    await fetch('/api/save-application', {
-        method: "POST",
-        mode: "cors",
-        cache: "no-cache",
-        credentials: "same-origin",
-        headers: {
-            "Content-Type": "application/json",
-            // 'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: data
-    })
+    return storeApplicationRequest({ contacts: contacts, questions: questions, date: date })
 }
 
 export const events = { handleSubmitApplication };

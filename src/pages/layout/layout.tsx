@@ -65,9 +65,12 @@ const Header = () => {
 
 const HeaderIcon = () => {
   return (
-      <div className={'flex items-center min-w-[13rem]'}>
-          <Image src={LogoWhite} alt={'Ю'} className={'mr-[3px] w-[30px] h-[30px]]'}/>
-          <Image src={VerticalDivider} alt={'|'} className={'mr-[3px]'}/>
+      <Link
+          href={'/'}
+          className={'flex items-center min-w-[13rem]'}
+      >
+          {/*<Image src={LogoWhite} alt={'Ю'} className={'mr-[3px] w-[30px] h-[30px]]'}/>*/}
+          {/*<Image src={VerticalDivider} alt={'|'} className={'mr-[3px]'}/>*/}
 
           <div className={'flex flex-col mt-[5px]'}>
               <Typography variant={'base'} className={'leading-[0.9rem]'}>
@@ -77,7 +80,7 @@ const HeaderIcon = () => {
                   Юрист Наталия Гулевич
               </Typography>
           </div>
-      </div>
+      </Link>
   )
 }
 
@@ -101,22 +104,22 @@ const Navigation = (props: NavigationProps) => {
               <div className={'md:block hidden md:w-full'}>
                  <div className={'flex justify-between w-full'}>
                      <Typography variant={'base'} className={'font-montserrat-light'}>
-                         <Link href={'#'}>
+                         <Link href={'/#'}>
                              Главная
                          </Link>
                      </Typography>
                      <Typography variant={'base'} className={'font-montserrat-light'}>
-                         <Link href={'#about-me'}>
+                         <Link href={'/#about-me'}>
                              Обо мне
                          </Link>
                      </Typography>
                      <Typography variant={'base'} className={'font-montserrat-light'}>
-                         <Link href={'#services'}>
+                         <Link href={'/#services'}>
                              Услуги
                          </Link>
                      </Typography>
                      <Typography variant={'base'} className={'font-montserrat-light'}>
-                         <Link href={'#feedback'}>
+                         <Link href={'/#feedback'}>
                              Обратная связь
                          </Link>
                      </Typography>

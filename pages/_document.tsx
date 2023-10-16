@@ -4,7 +4,7 @@ export default function Document() {
     return (
         <Html lang="ru">
             <Head>
-                <link rel="stortcut icon" href="/logo-black.svg" sizes="any" />
+                {/*<link rel="stortcut icon" href="/logo-black.svg" sizes="any" />*/}
             </Head>
             <body>
             <Main />
