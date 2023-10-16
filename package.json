@@ -27,5 +27,8 @@
   },
   "devDependencies": {
     "tailwind-styled-components": "^2.2.0"
+  },
+  "browser": {
+    "fs": false
   }
 }

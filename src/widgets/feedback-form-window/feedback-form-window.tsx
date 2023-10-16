@@ -1,10 +1,11 @@
-import React, {useMemo, useState} from "react";
+import React, {useState} from "react";
 import {IconButton} from "@/src/shared/ui";
 import {Close} from "@/src/shared/assets/ui";
 import {Typography} from "@/src/shared/ui/typography/typography";
 import ChevronLeft from '/public/images/chevron-left.svg'
 import ChevronRight from '/public/images/chevron-right.svg'
 import Image from "next/image";
+import {submitApplicationEvents} from "@/src/features";
 
 const feedbackFormData = [
     {
@@ -187,6 +188,7 @@ export const FeedbackFormWindow = (props: FeedbackFormWindowProps) => {
                 isFillingFeedbackForm ? (
                     <FeedbackWindow
                         close={close}
+                        selectedData={selectedData}
                         onOpenFinalPopup={props.onOpenFinalPopup}
                     />
                 ) : (
@@ -261,6 +263,7 @@ export const FeedbackFormWindow = (props: FeedbackFormWindowProps) => {
 type FeedbackWindowProps = {
     close: () => void;
     onOpenFinalPopup: () => void;
+    selectedData: any
 }
 const FeedbackWindow = (props: FeedbackWindowProps) => {
     const [phone, setPhone] = useState('')
@@ -268,6 +271,10 @@ const FeedbackWindow = (props: FeedbackWindowProps) => {
     const [city, setCity] = useState('')
 
     const handleSubmit = () => {
+        submitApplicationEvents.handleSubmitApplication({phone, name, city}, props.selectedData.map((data:any) => ({
+            question: feedbackFormData.find(el => el.id === data.id)?.title,
+            answer: feedbackFormData.find(el => el.id === data.id)?.variants.find(el => el.id === data.selected_variant)?.title
+        })))
         props.close()
         props.onOpenFinalPopup()
     }

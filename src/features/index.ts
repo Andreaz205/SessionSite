@@ -1,0 +1,1 @@
+export {events as submitApplicationEvents} from './submit-application/model'
