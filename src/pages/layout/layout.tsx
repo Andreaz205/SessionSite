@@ -150,7 +150,7 @@ const SocialNetworkLinks = () => {
                     {/*ссылка на телеграм*/}
                     <Link
                         target={'_blank'}
-                        href={'#'}
+                        href={'https://t.me/GulevichNatali'}
                         className={'block absolute top-[14px] left-[37px] z-10 h-[24px] w-[22px]'}
                     />
 
