@@ -143,7 +143,7 @@ const SocialNetworkLinks = () => {
                     {/*ссылка на вк*/}
                     <Link
                         target={'_blank'}
-                        href={'https://vk.com/spisaniedolgovgulevich'}
+                        href={'https://vk.com/gulevichnatali'}
                         className={'block absolute top-[18px] left-[20px] z-10 h-[16px] w-[16px]'}
                     />
 

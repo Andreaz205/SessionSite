@@ -1364,7 +1364,7 @@ const Author = () => {
                             Дизайн выполнил
                         </Typography>
                         <Link
-                            href={'https://t.me/zszszszdd'}
+                            href={'https://t.me/waterdanceq7'}
                             target={'_blank'}
                             className={'relative w-[0.75rem] mr-4'}
                         >
