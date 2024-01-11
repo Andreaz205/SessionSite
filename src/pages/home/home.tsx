@@ -1251,7 +1251,7 @@ const ServicesMediaBlock = (props: ServicesMediaBlockPopup) => {
                     />
                     <div className={'md:text-[0.9375rem] text-[1.25rem] md:-mt-[4.5rem] -mt-[3.5rem] md:pl-[11rem] md:pr-[11.5rem] md:px-0 px-[20px] text-center font-medium tracking-[0.1rem]'}>
                         <p>Внесудебное банкротство.</p>
-                        На текущий момент закон предусматривает эту возможность для граждан, чья задолженность находится в пределах от 50 тысяч до 500 тысяч рублей.
+                        На текущий момент закон предусматривает эту возможность для граждан, чья задолженность находится в пределах от 25 тыс до 1 млн рублей.
                     </div>
 
                     <div className={'absolute top-0 right-0 w-[3.25rem] h-full md:block hidden'}>
