@@ -10,7 +10,7 @@ import InstallmentMedia1 from '/public/installment/media_1.png';
 import InstallmentMedia2 from '/public/installment/media_2.png';
 import InstallmentMedia3 from '/public/installment/media_3.png';
 import InstallmentMedia4 from '/public/installment/media_4.png';
-import MePhoto from '/public/me/me.png';
+import MePhoto from '/public/me/i.jpg';
 import DocumentOnePageOne from '/public/examples/docs/document_1/page_1.png';
 import DocumentOnePageTwo from '/public/examples/docs/document_1/page_2.jpg';
 import DocumentOnePageThree from '/public/examples/docs/document_1/page_3.jpg';
@@ -313,7 +313,7 @@ const AboutMe = () => {
                         <div className={'md:pt-[110%] pt-[98%] relative w-4/5 md:w-full'}>
                             <Image
                                 src={MePhoto}
-                                className={'absolute w-full h-full top-0 left-0'}
+                                className={'absolute w-full h-full top-0 left-0 object-cover'}
                                 alt={'me'}
                             />
 

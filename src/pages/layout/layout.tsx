@@ -74,10 +74,10 @@ const HeaderIcon = () => {
 
           <div className={'flex flex-col mt-[5px]'}>
               <Typography variant={'base'} className={'leading-[0.9rem]'}>
-                  Списание долгов
+                  Сдача сессии
               </Typography>
               <Typography variant={'blue-sm'} className={'font-montserrat-light'}>
-                  Юрист Наталия Гулевич
+                  Базунов Андрей Сергеевич
               </Typography>
           </div>
       </Link>
